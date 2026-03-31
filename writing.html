@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing | Ann Miura-Ko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="container">
+            <a href="index.html" class="nav-brand">AMK</a>
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#investments">Investments</a>
+                <a href="books.html">Books</a>
+                <a href="writing.html" class="active">Writing</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="fade-in">Writing</h1>
+            <p class="page-subtitle fade-in">Essays on venture, founders, technology, and life.</p>
+        </div>
+    </header>
+
+    <section class="posts page-posts">
+        <div class="container">
+            <div class="posts-grid">
+
+                <article class="post-card fade-in">
+                    <div class="post-image">
+                        <img src="images/Thunderlizard_on_a_wave.jpg" alt="Era of Mass Cognition">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-tag">AI</span>
+                        <h3>Era of Mass Cognition</h3>
+                        <p>We've lived through the eras of Mass Compute and Mass Connectivity — but today we're entering something even bigger: Mass Cognition. For the first time, compute has an API to humans, and it will reshape who can build, how fast they can learn, and where value accrues.</p>
+                        <a href="https://substack.com/home/post/p-174047957" target="_blank" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+
+                <article class="post-card fade-in">
+                    <div class="post-image">
+                        <img src="images/e9ccdf5f17270fc886befcb594b9a303de3488fb3b9e446523864f313ba7a3de.jpg" alt="Superthinkers and Superbuilders">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-tag">Founders</span>
+                        <h3>Superthinkers &amp; Superbuilders</h3>
+                        <p>Your potential isn't defined by the logo on your resume — it's revealed in the habits you've built, the curiosity you chase, and the way you turn ideas into reality. Those are the marks of Superthinkers and Superbuilders&hellip;</p>
+                        <a href="https://annimaniac.substack.com/p/superthinkers-and-superbuilders" target="_blank" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Add more posts here as you publish them -->
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://annimaniac.substack.com" target="_blank">Substack</a>
+                    <a href="https://twitter.com/annimaniac" target="_blank">X / Twitter</a>
+                    <a href="https://www.linkedin.com/in/amiura/" target="_blank">LinkedIn</a>
+                </div>
+                <p class="copyright">&copy; 2026 Ann Miura-Ko</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

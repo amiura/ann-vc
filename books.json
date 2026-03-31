@@ -1,0 +1,149 @@
+[
+  {
+    "title": "Prophet Song",
+    "author": "Paul Lynch",
+    "cover": "https://m.media-amazon.com/images/I/71yHR8enZuL.jpg",
+    "recommended": true,
+    "status": "done"
+  },
+  {
+    "title": "The Anxious Generation",
+    "author": "Jonathan Haidt",
+    "cover": "https://m.media-amazon.com/images/I/81y7kPS2GfL.jpg",
+    "recommended": true,
+    "status": "done"
+  },
+  {
+    "title": "The God of the Woods",
+    "author": "Liz Moore",
+    "cover": "https://m.media-amazon.com/images/I/81Q4gcQ7CAL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Saint X",
+    "author": "Alexis Schaitkin",
+    "cover": "https://m.media-amazon.com/images/I/91S+RYrDZ2L.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Leadership",
+    "author": "Doris Kearns Goodwin",
+    "cover": "https://m.media-amazon.com/images/I/71o0sFUyheL.jpg",
+    "recommended": true,
+    "status": "done"
+  },
+  {
+    "title": "Cloud Cuckoo Land",
+    "author": "Anthony Doerr",
+    "cover": "https://m.media-amazon.com/images/I/81Go8gn1LGL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Principles for Dealing with the Changing World Order",
+    "author": "Ray Dalio",
+    "cover": "https://m.media-amazon.com/images/I/61R4llNQbkL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Talent",
+    "author": "Tyler Cowen & Daniel Gross",
+    "cover": "https://m.media-amazon.com/images/I/81yO+UZhDtL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Leonardo da Vinci",
+    "author": "Walter Isaacson",
+    "cover": "https://m.media-amazon.com/images/I/91olmCLoVuL.jpg",
+    "recommended": true,
+    "status": "done"
+  },
+  {
+    "title": "Essentialism",
+    "author": "Greg McKeown",
+    "cover": "https://m.media-amazon.com/images/I/71joOSFYMML.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "cover": "https://m.media-amazon.com/images/I/71i6uTU-9sL.jpg",
+    "recommended": true,
+    "status": "reading"
+  },
+  {
+    "title": "A Place for Us",
+    "author": "Fatima Farheen Mirza",
+    "cover": "https://m.media-amazon.com/images/I/91DSVWN2H4L.jpg",
+    "recommended": false,
+    "status": "reading"
+  },
+  {
+    "title": "The Invisible Hour",
+    "author": "Alice Hoffman",
+    "cover": "https://m.media-amazon.com/images/I/71-IU4pjHWL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Mad Honey",
+    "author": "Jodi Picoult & Jennifer Finney Boylan",
+    "cover": "https://m.media-amazon.com/images/I/81u6ontoWNL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Demon Copperhead",
+    "author": "Barbara Kingsolver",
+    "cover": "https://m.media-amazon.com/images/I/91vbJgMZIeL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Churchill",
+    "author": "Andrew Roberts",
+    "cover": "https://m.media-amazon.com/images/I/81PraCF2DgL.jpg",
+    "recommended": false,
+    "status": "reading"
+  },
+  {
+    "title": "The Conflict over the Conflict",
+    "author": "Kenneth S. Stern & Nadine Strossen",
+    "cover": "https://m.media-amazon.com/images/I/813Cvsgy57L.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Amp It Up",
+    "author": "Frank Slootman",
+    "cover": "https://m.media-amazon.com/images/I/513hbExIrdL.jpg",
+    "recommended": false,
+    "status": "done"
+  },
+  {
+    "title": "Flashlight",
+    "author": "Susan Choi",
+    "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1732124223i/219743621.jpg",
+    "recommended": false,
+    "status": "reading"
+  },
+  {
+    "title": "The Irony of American History",
+    "author": "Reinhold Niebuhr",
+    "cover": "https://m.media-amazon.com/images/I/913HdQbKP5L.jpg",
+    "recommended": false,
+    "status": "reading"
+  },
+  {
+    "title": "James",
+    "author": "Percival Everett",
+    "cover": "https://m.media-amazon.com/images/I/71vz-ZouXtL.jpg",
+    "recommended": false,
+    "status": "reading"
+  }
+]

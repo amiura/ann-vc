@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ann Miura-Ko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="container">
+            <a href="#" class="nav-brand">AMK</a>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="investments.html">Investments</a>
+                <a href="books.html">Books</a>
+                <a href="writing.html">Writing</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1 class="fade-in">Ann Miura-Ko</h1>
+            <p class="typed-tagline fade-in">I'm Ann &mdash; <span id="typed-text"></span><span class="cursor">|</span></p>
+            <p class="bio fade-in">
+                Co-founding partner of <a href="https://floodgate.com" target="_blank">Floodgate</a>, a pre-seed and seed stage venture firm.
+                Mom to 3. Co-director of the Stanford Mayfield Fellows Program. Married to an awesome
+                <a href="https://www.linkedin.com/in/koalbert/" target="_blank">husband</a>.
+                My mom calls me Reiko.
+            </p>
+        </div>
+    </header>
+
+    <section class="investments" id="investments">
+        <div class="container">
+            <h2 class="section-title fade-in">Investments</h2>
+            <p class="fade-in">At Floodgate, I focus on pre-seed and seed stage investments in founders who are building the future. I look for Superthinkers and Superbuilders — people with deep conviction and the ability to turn bold ideas into reality.</p>
+            <div class="highlights-grid fade-in" id="featured-companies"></div>
+            <a href="investments.html" class="view-all fade-in">View Portfolio &rarr;</a>
+        </div>
+    </section>
+
+    <section class="books" id="books">
+        <div class="container">
+            <h2 class="section-title fade-in">Currently Reading</h2>
+            <div class="books-grid" id="books-grid"></div>
+            <a href="books.html" class="view-all fade-in">View All Books &rarr;</a>
+        </div>
+    </section>
+
+    <section class="posts" id="writing">
+        <div class="container">
+            <h2 class="section-title fade-in">Latest Writing</h2>
+            <div class="posts-grid">
+
+                <article class="post-card fade-in">
+                    <div class="post-image">
+                        <img src="images/Thunderlizard_on_a_wave.jpg" alt="Era of Mass Cognition">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-tag">AI</span>
+                        <h3>Era of Mass Cognition</h3>
+                        <p>We've lived through the eras of Mass Compute and Mass Connectivity — but today we're entering something even bigger: Mass Cognition. For the first time, compute has an API to humans, and it will reshape who can build, how fast they can learn, and where value accrues.</p>
+                        <a href="https://substack.com/home/post/p-174047957" target="_blank" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+
+                <article class="post-card fade-in">
+                    <div class="post-image">
+                        <img src="images/e9ccdf5f17270fc886befcb594b9a303de3488fb3b9e446523864f313ba7a3de.jpg" alt="Superthinkers and Superbuilders">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-tag">Founders</span>
+                        <h3>Superthinkers &amp; Superbuilders</h3>
+                        <p>Your potential isn't defined by the logo on your resume — it's revealed in the habits you've built, the curiosity you chase, and the way you turn ideas into reality. Those are the marks of Superthinkers and Superbuilders&hellip;</p>
+                        <a href="https://annimaniac.substack.com/p/superthinkers-and-superbuilders" target="_blank" class="read-more">Read More &rarr;</a>
+                    </div>
+                </article>
+
+            </div>
+            <a href="writing.html" class="view-all fade-in">View All Writing &rarr;</a>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content fade-in">
+                <h2>Let's Connect</h2>
+                <div class="social-links">
+                    <a href="https://annimaniac.substack.com" target="_blank">Substack</a>
+                    <a href="https://twitter.com/annimaniac" target="_blank">X / Twitter</a>
+                    <a href="https://www.linkedin.com/in/amiura/" target="_blank">LinkedIn</a>
+                </div>
+                <p class="copyright">&copy; 2026 Ann Miura-Ko</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Typed text animation
+        const phrases = [
+            "co-director of Stanford Mayfield Fellows.",
+            "a co-conspirator.",
+            "a truth-seeker."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedEl = document.getElementById('typed-text');
+
+        function type() {
+            const current = phrases[phraseIndex];
+            if (isDeleting) {
+                typedEl.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedEl.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let delay = isDeleting ? 40 : 60;
+
+            if (!isDeleting && charIndex === current.length) {
+                delay = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                delay = 400;
+            }
+
+            setTimeout(type, delay);
+        }
+        setTimeout(type, 800);
+
+        // Scroll-triggered fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Homepage books — just show currently reading
+        const grid = document.getElementById('books-grid');
+        fetch('books.json')
+            .then(r => r.json())
+            .then(books => {
+                books.filter(b => b.status === 'reading').forEach(book => {
+                    const card = document.createElement('div');
+                    card.className = 'book-card fade-in';
+                    card.innerHTML = `
+                        <img src="${book.cover}" alt="${book.title}">
+                        <div class="book-info">
+                            <h4>${book.title}</h4>
+                            <p class="book-author">${book.author}</p>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+                grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            });
+
+        // Homepage featured investments
+        const featured = [
+            { name: 'Lyft', badge: 'IPO' },
+            { name: 'SmarterDX' },
+            { name: 'Merlin Labs', badge: 'IPO' },
+            { name: 'Prax Health', badge: 'New Investment' },
+            { name: 'Terradot' },
+            { name: 'Counsel' }
+        ];
+        const featuredGrid = document.getElementById('featured-companies');
+        fetch('investments.json')
+            .then(r => r.json())
+            .then(companies => {
+                featured.forEach(item => {
+                    const company = companies.find(c => c.name === item.name);
+                    if (!company) return;
+                    const card = document.createElement('a');
+                    card.className = 'highlight-card';
+                    card.href = company.url;
+                    card.target = '_blank';
+
+                    const logoHTML = company.logo
+                        ? `<img src="${company.logo}" alt="${company.name}">`
+                        : `<span class="company-text-logo">${company.name}</span>`;
+
+                    const badgeText = item.badge || company.highlightText || '';
+                    const badgeHTML = badgeText
+                        ? `<span class="highlight-badge">${badgeText}</span>`
+                        : '';
+
+                    card.innerHTML = `
+                        <div class="highlight-logo">${logoHTML}</div>
+                        <div class="highlight-info">
+                            <h3>${company.name}</h3>
+                            ${badgeHTML}
+                            <p>${company.description}</p>
+                        </div>
+                    `;
+                    featuredGrid.appendChild(card);
+                });
+            });
+    </script>
+
+</body>
+</html>

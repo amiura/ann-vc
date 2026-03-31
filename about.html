@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Ann Miura-Ko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="container">
+            <a href="index.html" class="nav-brand">AMK</a>
+            <div class="nav-links">
+                <a href="about.html" class="active">About</a>
+                <a href="investments.html">Investments</a>
+                <a href="books.html">Books</a>
+                <a href="writing.html">Writing</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="about-page">
+        <div class="container">
+            <div class="about-hero fade-in">
+                <div class="about-photo">
+                    <img src="https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/5fe0a7f4d8803745927acf40_Ann%20Miura-Ko.jpg" alt="Ann Miura-Ko">
+                </div>
+                <div class="about-intro">
+                    <h1>Ann Miura-Ko</h1>
+                    <p class="about-lead">Co-founding Partner at Floodgate. A repeat member of the Forbes Midas List and the New York Times Top 20 Venture Capitalists Worldwide.</p>
+                </div>
+            </div>
+
+            <div class="about-body">
+                <div class="about-section fade-in">
+                    <h2 class="section-title">Bio</h2>
+                    <p>Ann brings expertise in highly technical investments, backed by her PhD in mathematical modeling of cybersecurity from Stanford. Her father's career as a NASA rocket scientist inspired her early interest in technology. She studied electrical engineering at Yale and participated in the Robocup Competition in Paris.</p>
+                    <p>Her investment portfolio spans healthcare (including a $1B+ exit for SmarterDX in 2025), consumer commerce, marketplaces (notably Lyft from 2010&ndash;2023), and software for small businesses. She has led seed and pre-seed rounds in AI companies including Counsel Health, Hebbia, and ReadyOn.</p>
+                    <p>Beyond investing, she lectures on entrepreneurship at Stanford, co-directs the Mayfield Fellows Program, and co-founded All Raise, focusing on diversity in venture capital. She served on the Yale Corporation Board of Trustees from 2019 to 2025.</p>
+                </div>
+
+                <div class="about-section fade-in">
+                    <h2 class="section-title">My Story</h2>
+                    <p>I've always been someone who loved being different. Being different has always felt like an advantage.</p>
+                    <p>I co-founded Floodgate in 2008 during the financial crisis, recognizing that founders were accepting unfavorable valuations when smaller seed rounds could prove just as viable. "$500k would be the new $5M" &mdash; reflecting the lean startup methodology I learned assisting Steve Blank at Stanford.</p>
+                    <p>My first year proved intense: I gave birth to my second child, defended my PhD thesis six weeks later, and made my initial investment in TaskRabbit. I'm known for being a straight shooter who has an uncanny eye for talent and a sixth sense about the path to product-market fit.</p>
+                    <p>I don't think of myself as an investor. I'm a co-conspirator to the founders I work with.</p>
+                </div>
+
+                <div class="about-section fade-in">
+                    <h2 class="section-title">Interests</h2>
+                    <p>Piano, Robots, and Gastronomy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://annimaniac.substack.com" target="_blank">Substack</a>
+                    <a href="https://twitter.com/annimaniac" target="_blank">X / Twitter</a>
+                    <a href="https://www.linkedin.com/in/amiura/" target="_blank">LinkedIn</a>
+                </div>
+                <p class="copyright">&copy; 2026 Ann Miura-Ko</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

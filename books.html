@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List | Ann Miura-Ko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="container">
+            <a href="index.html" class="nav-brand">AMK</a>
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#investments">Investments</a>
+                <a href="books.html" class="active">Books</a>
+                <a href="writing.html">Writing</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="fade-in">Book List</h1>
+            <p class="typed-tagline fade-in">I love reading <span id="typed-text"></span><span class="cursor">|</span></p>
+            <p class="page-subtitle fade-in">What I've read and what I recommend.</p>
+        </div>
+    </header>
+
+    <section class="books page-books">
+        <div class="container">
+            <div class="book-controls fade-in">
+                <div class="book-filters">
+                    <button class="book-filter active" data-filter="all">All</button>
+                    <button class="book-filter" data-filter="recommended">Recommended</button>
+                    <button class="book-filter" data-filter="reading">Currently Reading</button>
+                </div>
+                <div class="book-actions">
+                    <button class="edit-books-btn admin-only" id="add-book-btn" style="display:none">+ Add Book</button>
+                    <button class="edit-books-btn admin-only" id="edit-books-btn" style="display:none">Edit Books</button>
+                    <button class="edit-books-btn" id="login-btn">Login</button>
+                </div>
+            </div>
+            <div class="books-grid" id="books-grid"></div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal-backdrop" id="login-modal">
+        <div class="modal">
+            <h3>Admin Login</h3>
+            <form id="login-form">
+                <label>User ID <input type="text" id="login-user" required></label>
+                <label>Password <input type="password" id="login-pass" required></label>
+                <p class="login-error" id="login-error" style="display:none">Incorrect credentials</p>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-cancel" id="login-cancel">Cancel</button>
+                    <button type="submit" class="modal-submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Book Modal -->
+    <div class="modal-backdrop" id="add-book-modal">
+        <div class="modal">
+            <h3>Add a Book</h3>
+            <form id="add-book-form">
+                <label>Title <input type="text" id="book-title" required></label>
+                <label>Author <input type="text" id="book-author" required></label>
+                <label>Cover Image URL <input type="url" id="book-cover" placeholder="https://m.media-amazon.com/images/I/..." required></label>
+                <div class="modal-toggles">
+                    <label class="toggle-label"><input type="checkbox" id="book-recommended"> Recommended</label>
+                    <label class="toggle-label"><input type="checkbox" id="book-reading" checked> Currently Reading</label>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-cancel" id="modal-cancel">Cancel</button>
+                    <button type="submit" class="modal-submit">Add Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://annimaniac.substack.com" target="_blank">Substack</a>
+                    <a href="https://twitter.com/annimaniac" target="_blank">X / Twitter</a>
+                    <a href="https://www.linkedin.com/in/amiura/" target="_blank">LinkedIn</a>
+                </div>
+                <p class="copyright">&copy; 2026 Ann Miura-Ko</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Typed text animation
+        const phrases = [
+            "on my Kindle.",
+            "in my bed.",
+            "on weekends.",
+            "audiobooks on a drive.",
+            "fiction and not just business books.",
+            "about transformation.",
+            "about the lives of flawed heroes."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedEl = document.getElementById('typed-text');
+
+        function type() {
+            const current = phrases[phraseIndex];
+            if (isDeleting) {
+                typedEl.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedEl.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let delay = isDeleting ? 40 : 60;
+
+            if (!isDeleting && charIndex === current.length) {
+                delay = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                delay = 400;
+            }
+
+            setTimeout(type, delay);
+        }
+        setTimeout(type, 800);
+
+        // Scroll-triggered fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Auth system
+        const AUTH_HASH = '5a77ea1792005d68ba29bf41cf6ee7cff6fdda8d3889d5a7699c38c460927d26';
+
+        async function hashCredentials(user, pass) {
+            const data = new TextEncoder().encode(user + ':' + pass);
+            const buf = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function showAdminUI() {
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
+            document.getElementById('login-btn').style.display = 'none';
+        }
+
+        if (sessionStorage.getItem('amk-admin') === 'true') showAdminUI();
+
+        const loginModal = document.getElementById('login-modal');
+        document.getElementById('login-btn').addEventListener('click', () => loginModal.classList.add('open'));
+        document.getElementById('login-cancel').addEventListener('click', () => { loginModal.classList.remove('open'); document.getElementById('login-error').style.display = 'none'; });
+        loginModal.addEventListener('click', (e) => { if (e.target === loginModal) { loginModal.classList.remove('open'); document.getElementById('login-error').style.display = 'none'; } });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const hash = await hashCredentials(document.getElementById('login-user').value, document.getElementById('login-pass').value);
+            if (hash === AUTH_HASH) {
+                sessionStorage.setItem('amk-admin', 'true');
+                showAdminUI();
+                loginModal.classList.remove('open');
+                document.getElementById('login-form').reset();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        });
+
+        // Books system
+        let booksData = [];
+        let editMode = false;
+        const grid = document.getElementById('books-grid');
+        const editBtn = document.getElementById('edit-books-btn');
+
+        function renderBooks() {
+            grid.innerHTML = '';
+            booksData.forEach((book, i) => {
+                const card = document.createElement('div');
+                card.className = 'book-card fade-in visible';
+                card.dataset.recommended = book.recommended ? 'yes' : 'no';
+                card.dataset.status = book.status;
+
+                let badges = '';
+                if (book.status === 'reading') badges += '<span class="book-badge reading">Reading</span>';
+                if (book.recommended) badges += '<span class="book-badge recommended">Recommended</span>';
+
+                let editOverlay = '';
+                if (editMode) {
+                    editOverlay = `
+                        <div class="book-edit-overlay">
+                            <button class="edit-toggle ${book.status === 'reading' ? 'active' : ''}" data-action="status" data-index="${i}">
+                                ${book.status === 'reading' ? 'Reading' : 'Done'}
+                            </button>
+                            <button class="edit-toggle ${book.recommended ? 'active' : ''}" data-action="recommended" data-index="${i}">
+                                ${book.recommended ? 'Recommended' : 'Not Rec.'}
+                            </button>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="book-cover-wrap">
+                        <img src="${book.cover}" alt="${book.title}">
+                        ${editOverlay}
+                    </div>
+                    <div class="book-info">
+                        <h4>${book.title}</h4>
+                        <p class="book-author">${book.author}</p>
+                        ${badges}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            const activeFilter = document.querySelector('.book-filter.active');
+            if (activeFilter) applyFilter(activeFilter.dataset.filter);
+        }
+
+        function applyFilter(filter) {
+            document.querySelectorAll('.book-card').forEach(card => {
+                const show =
+                    filter === 'all' ||
+                    (filter === 'recommended' && card.dataset.recommended === 'yes') ||
+                    (filter === 'reading' && card.dataset.status === 'reading');
+                card.style.display = show ? '' : 'none';
+            });
+        }
+
+        fetch('books.json')
+            .then(r => r.json())
+            .then(books => {
+                booksData = books;
+                renderBooks();
+                grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            });
+
+        function saveBooks() {
+            const blob = new Blob([JSON.stringify(booksData, null, 2) + '\n'], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'books.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        editBtn.addEventListener('click', () => {
+            editMode = !editMode;
+            document.body.classList.toggle('books-edit-mode', editMode);
+            editBtn.textContent = editMode ? 'Done Editing' : 'Edit Books';
+            if (!editMode) saveBooks();
+            renderBooks();
+        });
+
+        grid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.edit-toggle');
+            if (!btn) return;
+            const i = parseInt(btn.dataset.index);
+            if (btn.dataset.action === 'status') {
+                booksData[i].status = booksData[i].status === 'reading' ? 'done' : 'reading';
+            } else {
+                booksData[i].recommended = !booksData[i].recommended;
+            }
+            renderBooks();
+        });
+
+        const addModal = document.getElementById('add-book-modal');
+        document.getElementById('add-book-btn').addEventListener('click', () => addModal.classList.add('open'));
+        document.getElementById('modal-cancel').addEventListener('click', () => addModal.classList.remove('open'));
+        addModal.addEventListener('click', (e) => { if (e.target === addModal) addModal.classList.remove('open'); });
+
+        document.getElementById('add-book-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            booksData.unshift({
+                title: document.getElementById('book-title').value,
+                author: document.getElementById('book-author').value,
+                cover: document.getElementById('book-cover').value,
+                recommended: document.getElementById('book-recommended').checked,
+                status: document.getElementById('book-reading').checked ? 'reading' : 'done'
+            });
+            renderBooks();
+            saveBooks();
+            document.getElementById('add-book-form').reset();
+            document.getElementById('book-reading').checked = true;
+            addModal.classList.remove('open');
+        });
+
+        document.querySelectorAll('.book-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.book-filter.active').classList.remove('active');
+                btn.classList.add('active');
+                applyFilter(btn.dataset.filter);
+            });
+        });
+    </script>
+
+</body>
+</html>

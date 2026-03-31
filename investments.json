@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Counsel",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/67350644affcfde939e51723_counsel_logo_black_2000px.png",
+    "url": "https://floodgate.com/companies",
+    "description": "Personalized medical advice from expert physicians anytime, anywhere.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Hebbia",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602bfe95ee73ad578496cfe3_Frame%2022.png",
+    "url": "https://www.hebbia.ai",
+    "description": "AI-powered knowledge work platform for processing and analyzing large volumes of documents.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Inscopix",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602bff08a67a6b03505f0861_Frame%2027.png",
+    "url": "https://www.inscopix.com",
+    "description": "Brain-mapping technology enabling researchers to visualize and decode neural circuits.",
+    "highlight": false,
+    "status": "exited"
+  },
+  {
+    "name": "Joey AI",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/6930ae01eefa7ac307500430_Joey%20AI%20Logo%20-%20Floodgate%20website.png",
+    "url": "https://floodgate.com/companies",
+    "description": "Consumer AI application reimagining how people interact with artificial intelligence.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Loris",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c003864edf65c24da029c_Frame%2035.png",
+    "url": "https://www.loris.ai",
+    "description": "AI-powered customer service intelligence that turns conversations into actionable insights.",
+    "highlight": false,
+    "status": "exited"
+  },
+  {
+    "name": "Loyalist",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/64ee3d79eb028cbd25240311_Loyalist%20Logo%20Black.png",
+    "url": "https://floodgate.com/companies",
+    "description": "Technology platform helping restaurants build stronger customer loyalty and retention.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Lyft",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/60250ff8dd07de5a7a10968b_LYFT.png",
+    "url": "https://www.lyft.com",
+    "description": "On-demand transportation marketplace connecting riders with drivers.",
+    "highlight": true,
+    "status": "exited"
+  },
+  {
+    "name": "Mem",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/605b6d76996e2c3bc90f0b53_mem.png",
+    "url": "https://mem.ai",
+    "description": "AI-powered knowledge management that organizes itself for you.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Merlin Labs",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c355e8cd53710e6b6b862_Frame%2036.png",
+    "url": "https://www.merlinlabs.com",
+    "description": "Building autonomous flight systems to make aviation safer and more accessible.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Neptune",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/679d59bcd17515bc56ca880c_Full_logomark.png",
+    "url": "https://floodgate.com/companies",
+    "description": "Consumer marketplace platform connecting buyers and sellers.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Nooks",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/605b717b737f863d961526ed_nooks.png",
+    "url": "https://www.nooks.ai",
+    "description": "AI-powered sales development platform that automates dialing and coaching for SDR teams.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Plaicin",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/67ed91d4a12d686885e453d1_plaicin_logo.png",
+    "url": "https://floodgate.com/companies",
+    "description": "Consumer application building new ways for people to connect.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Prax Health",
+    "logo": null,
+    "url": "https://praxhealth.com",
+    "description": "All-in-one platform helping nurse practitioners start and manage independent practices.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "ReadyOn",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/65c156b52217605ae9c70710_Logo_2x.png",
+    "url": "https://floodgate.com/companies",
+    "description": "AI-driven platform for the next generation of content creation.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Refinery29",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602b50afa194b7c16986d2e3_image%2081.png",
+    "url": "https://www.refinery29.com",
+    "description": "Digital media and entertainment company focused on women's lifestyle content.",
+    "highlight": false,
+    "status": "exited"
+  },
+  {
+    "name": "Replenysh",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c36f6e502f1173bf10edf_replen.png",
+    "url": "https://www.replenysh.com",
+    "description": "Marketplace platform connecting communities with recycling and sustainability solutions.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Roo",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/60a68cb6c0735942e9ccdac4_roo_logo.png",
+    "url": "https://www.roo.vet",
+    "description": "On-demand marketplace connecting veterinary hospitals with relief veterinarians.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Roo Code",
+    "logo": null,
+    "url": "https://roocode.com",
+    "description": "AI-powered coding assistant for VS Code and cloud-based team development.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "SmarterDX",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/66ec79175b88b22f5493b98d_Sdx-Logo.png",
+    "url": "https://www.smarterdx.com",
+    "description": "AI-powered solution uncovering missed diagnoses and recovering hospital revenue.",
+    "highlight": true,
+    "highlightText": "Exited at $1.1B",
+    "status": "exited"
+  },
+  {
+    "name": "Starkware",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c3bb1498e0bc2e712e245_Frame%2062.png",
+    "url": "https://starkware.co",
+    "description": "Building scalability solutions for blockchain using zero-knowledge proof technology.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Studio",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/64f2054859804b75525ecf36_image%20(1).png",
+    "url": "https://floodgate.com/companies",
+    "description": "E-learning platform delivering world-class education experiences.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Tango",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c3bc63898832a08ada0a3_Frame%2064.png",
+    "url": "https://www.tango.me",
+    "description": "Digital rewards and incentives platform making it easy to send and manage gift cards.",
+    "highlight": false,
+    "status": "exited"
+  },
+  {
+    "name": "TaskRabbit",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602b56ea55aee77819c257d4_image%20106.png",
+    "url": "https://www.taskrabbit.com",
+    "description": "Marketplace connecting people with local freelancers for everyday tasks and errands.",
+    "highlight": true,
+    "status": "exited"
+  },
+  {
+    "name": "Terradot",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/69bd577ab9a3eafb8149f37c_Terradot-logo.png",
+    "url": "https://www.terradot.earth",
+    "description": "Carbon removal technology turning waste into a climate solution at scale.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Thinkful",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c3d6d5c2888d9fb7d67dc_thinkful.png",
+    "url": "https://www.thinkful.com",
+    "description": "Online coding bootcamp offering mentored education in software engineering and data science.",
+    "highlight": false,
+    "status": "exited"
+  },
+  {
+    "name": "Valgo",
+    "logo": null,
+    "url": "https://valgo.ai",
+    "description": "Risk quantification software converting simulation data into loss estimates for insuring autonomous systems.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Valley Steer",
+    "logo": null,
+    "url": "https://valleysteer.com",
+    "description": "AI-powered clinical chart analysis helping healthcare plans improve quality measures and risk adjustment.",
+    "highlight": false,
+    "status": "active"
+  },
+  {
+    "name": "Xamarin",
+    "logo": "https://cdn.prod.website-files.com/5fe0a03c3b961abbd8ef6b08/602c441f747cb7039b1c6212_Frame%2078.png",
+    "url": "https://dotnet.microsoft.com/apps/xamarin",
+    "description": "Cross-platform mobile app development framework, acquired by Microsoft.",
+    "highlight": true,
+    "status": "exited"
+  }
+]

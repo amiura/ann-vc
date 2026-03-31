@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investments | Ann Miura-Ko</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="container">
+            <a href="index.html" class="nav-brand">AMK</a>
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="investments.html" class="active">Investments</a>
+                <a href="books.html">Books</a>
+                <a href="writing.html">Writing</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="fade-in">Investments</h1>
+            <p class="typed-tagline fade-in">I'm a co-conspirator to <span id="typed-text"></span><span class="cursor">|</span></p>
+            <p class="page-subtitle fade-in">I invest at the moment of maximum doubt when a company is still a theory and not yet a pattern. Pre-seed and seed, typically $500k&ndash;$5M.</p>
+        </div>
+    </header>
+
+    <!-- Portfolio -->
+    <section class="portfolio">
+        <div class="container">
+            <div class="portfolio-controls fade-in">
+                <div class="portfolio-filters">
+                    <button class="portfolio-filter" data-filter="all">All</button>
+                    <button class="portfolio-filter active" data-filter="active">Active</button>
+                    <button class="portfolio-filter" data-filter="exited">Exited</button>
+                </div>
+            </div>
+            <div class="portfolio-grid" id="portfolio-grid"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://annimaniac.substack.com" target="_blank">Substack</a>
+                    <a href="https://twitter.com/annimaniac" target="_blank">X / Twitter</a>
+                    <a href="https://www.linkedin.com/in/amiura/" target="_blank">LinkedIn</a>
+                </div>
+                <p class="copyright">&copy; 2026 Ann Miura-Ko</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Typed text animation
+        const phrases = [
+            "Thunderlizards.",
+            "Outliers.",
+            "the Unreasonable.",
+            "the Inevitable.",
+            "the Obsessed.",
+            "the Relentless.",
+            "Heretics."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedEl = document.getElementById('typed-text');
+
+        function type() {
+            const current = phrases[phraseIndex];
+            if (isDeleting) {
+                typedEl.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedEl.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let delay = isDeleting ? 40 : 60;
+
+            if (!isDeleting && charIndex === current.length) {
+                delay = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                delay = 400;
+            }
+
+            setTimeout(type, delay);
+        }
+        setTimeout(type, 800);
+
+        // Scroll-triggered fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Load investments
+        const portfolioGrid = document.getElementById('portfolio-grid');
+
+        fetch('investments.json')
+            .then(r => r.json())
+            .then(companies => {
+                companies.forEach(company => {
+                    const card = document.createElement('a');
+                    card.className = 'company-card fade-in';
+                    card.href = company.url;
+                    card.target = '_blank';
+                    card.dataset.status = company.status;
+
+                    const logoHTML = company.logo
+                        ? `<img src="${company.logo}" alt="${company.name}">`
+                        : `<span class="company-text-logo">${company.name}</span>`;
+
+                    card.innerHTML = `
+                        <div class="company-logo">${logoHTML}</div>
+                        <div class="company-tooltip">
+                            <strong>${company.name}</strong>
+                            <p>${company.description}</p>
+                        </div>
+                    `;
+                    portfolioGrid.appendChild(card);
+                });
+
+                // Apply default filter and observe
+                document.querySelectorAll('.company-card').forEach(card => {
+                    card.style.display = card.dataset.status === 'active' ? '' : 'none';
+                });
+                document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            });
+
+        // Portfolio filters
+        document.querySelectorAll('.portfolio-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.portfolio-filter.active').classList.remove('active');
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.company-card').forEach(card => {
+                    card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
