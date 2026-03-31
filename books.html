@@ -278,10 +278,11 @@
             const content = btoa(unescape(encodeURIComponent(JSON.stringify(booksData, null, 2) + '\n')));
             const repo = 'amiura/ann-vc';
             const path = 'books.json';
+            const authHeader = token.startsWith('github_pat_') ? `Bearer ${token}` : `token ${token}`;
 
             // Get current file SHA
             const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-                headers: { Authorization: `token ${token}` }
+                headers: { Authorization: authHeader }
             });
             const fileData = await fileRes.json();
 
@@ -289,7 +290,7 @@
             const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
                 method: 'PUT',
                 headers: {
-                    Authorization: `token ${token}`,
+                    Authorization: authHeader,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
