@@ -59,11 +59,25 @@
             <form id="login-form">
                 <label>User ID <input type="text" id="login-user" required></label>
                 <label>Password <input type="password" id="login-pass" required></label>
-                <label>GitHub Token <input type="password" id="login-token" required placeholder="ghp_..."></label>
                 <p class="login-error" id="login-error" style="display:none">Incorrect credentials</p>
                 <div class="modal-buttons">
                     <button type="button" class="modal-cancel" id="login-cancel">Cancel</button>
                     <button type="submit" class="modal-submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Token Setup Modal (one-time) -->
+    <div class="modal-backdrop" id="token-modal">
+        <div class="modal">
+            <h3>One-Time Setup</h3>
+            <p style="font-size:0.85rem;color:var(--color-text-light);margin-bottom:16px;">Enter your GitHub token so edits auto-publish. You only need to do this once on this device.</p>
+            <form id="token-form">
+                <label>GitHub Token <input type="password" id="setup-token" required placeholder="github_pat_..."></label>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-cancel" id="token-cancel">Skip</button>
+                    <button type="submit" class="modal-submit">Save Token</button>
                 </div>
             </form>
         </div>
@@ -154,7 +168,7 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Auth system
+        // Auth system — simple user/pass, token stored separately
         const AUTH_HASH = '5a77ea1792005d68ba29bf41cf6ee7cff6fdda8d3889d5a7699c38c460927d26';
 
         async function hashCredentials(user, pass) {
@@ -164,7 +178,6 @@
                 const buf = await crypto.subtle.digest('SHA-256', data);
                 return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
             }
-            // Fallback for non-HTTPS: simple hash
             let h = 0;
             for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
             return h.toString(16);
@@ -184,6 +197,7 @@
 
         if (sessionStorage.getItem('amk-admin') === 'true') showAdminUI();
 
+        // Login modal
         const loginModal = document.getElementById('login-modal');
         document.getElementById('login-btn').addEventListener('click', () => loginModal.classList.add('open'));
         document.getElementById('login-cancel').addEventListener('click', () => { loginModal.classList.remove('open'); document.getElementById('login-error').style.display = 'none'; });
@@ -194,13 +208,27 @@
             const hash = await hashCredentials(document.getElementById('login-user').value.trim(), document.getElementById('login-pass').value.trim());
             if (hash === AUTH_HASH || hash === FALLBACK_HASH) {
                 sessionStorage.setItem('amk-admin', 'true');
-                sessionStorage.setItem('gh-token', document.getElementById('login-token').value.trim());
                 showAdminUI();
                 loginModal.classList.remove('open');
                 document.getElementById('login-form').reset();
+                // If no GitHub token saved yet, prompt for one-time setup
+                if (!localStorage.getItem('gh-token')) {
+                    document.getElementById('token-modal').classList.add('open');
+                }
             } else {
                 document.getElementById('login-error').style.display = 'block';
             }
+        });
+
+        // One-time token setup modal
+        const tokenModal = document.getElementById('token-modal');
+        document.getElementById('token-cancel').addEventListener('click', () => tokenModal.classList.remove('open'));
+        tokenModal.addEventListener('click', (e) => { if (e.target === tokenModal) tokenModal.classList.remove('open'); });
+        document.getElementById('token-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            localStorage.setItem('gh-token', document.getElementById('setup-token').value.trim());
+            tokenModal.classList.remove('open');
+            showStatus('Token saved!');
         });
 
         // Books system
@@ -208,6 +236,11 @@
         let editMode = false;
         const grid = document.getElementById('books-grid');
         const editBtn = document.getElementById('edit-books-btn');
+
+        function showStatus(msg) {
+            const el = document.getElementById('save-status');
+            if (el) { el.textContent = msg; el.style.display = 'inline'; setTimeout(() => el.style.display = 'none', 2500); }
+        }
 
         function renderBooks() {
             grid.innerHTML = '';
@@ -263,66 +296,77 @@
             });
         }
 
-        fetch('books.json')
-            .then(r => r.json())
-            .then(books => {
-                booksData = books;
+        // Load books: check localStorage first (admin edits), fall back to books.json
+        function loadBooks() {
+            const local = localStorage.getItem('booksData');
+            if (local) {
+                booksData = JSON.parse(local);
                 renderBooks();
                 grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-            });
+            }
+            // Always also fetch from server to stay in sync
+            fetch('books.json')
+                .then(r => r.json())
+                .then(books => {
+                    if (!local) {
+                        booksData = books;
+                        renderBooks();
+                        grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+                    }
+                });
+        }
+        loadBooks();
 
-        async function saveBooks() {
-            const token = sessionStorage.getItem('gh-token');
-            if (!token) { alert('No GitHub token. Please log in again.'); return; }
+        function saveLocal() {
+            localStorage.setItem('booksData', JSON.stringify(booksData));
+        }
+
+        async function publishToGitHub() {
+            const token = localStorage.getItem('gh-token');
+            if (!token) {
+                document.getElementById('token-modal').classList.add('open');
+                return;
+            }
 
             const content = btoa(unescape(encodeURIComponent(JSON.stringify(booksData, null, 2) + '\n')));
             const repo = 'amiura/ann-vc';
             const path = 'books.json';
             const authHeader = token.startsWith('github_pat_') ? `Bearer ${token}` : `token ${token}`;
 
-            // Get current file SHA
-            const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-                headers: { Authorization: authHeader }
-            });
-            if (!fileRes.ok) {
-                const err = await fileRes.json().catch(() => ({}));
-                alert('Could not read file (' + fileRes.status + '): ' + (err.message || 'Unknown error'));
-                return;
-            }
-            const fileData = await fileRes.json();
+            try {
+                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                    headers: { Authorization: authHeader }
+                });
+                if (!fileRes.ok) throw new Error('Token may be invalid or expired. Go to GitHub to create a new one.');
+                const fileData = await fileRes.json();
 
-            // Commit updated file
-            const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-                method: 'PUT',
-                headers: {
-                    Authorization: authHeader,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'Update books.json via site editor',
-                    content: content,
-                    sha: fileData.sha
-                })
-            });
+                const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'Update books via site editor', content, sha: fileData.sha })
+                });
 
-            if (res.ok) {
-                const saveStatus = document.getElementById('save-status');
-                if (saveStatus) {
-                    saveStatus.textContent = 'Saved!';
-                    saveStatus.style.display = 'inline';
-                    setTimeout(() => saveStatus.style.display = 'none', 2000);
+                if (res.ok) {
+                    showStatus('Published! Live in ~1 min.');
+                    // Clear localStorage since server is now up to date
+                    localStorage.removeItem('booksData');
+                } else {
+                    throw new Error('Publish failed. Check token permissions.');
                 }
-            } else {
-                const err = await res.json().catch(() => ({}));
-                alert('Save failed (' + res.status + '): ' + (err.message || 'Unknown error'));
+            } catch (err) {
+                alert(err.message);
             }
         }
 
+        // Edit mode
         editBtn.addEventListener('click', () => {
             editMode = !editMode;
             document.body.classList.toggle('books-edit-mode', editMode);
             editBtn.textContent = editMode ? 'Done Editing' : 'Edit Books';
-            if (!editMode) saveBooks();
+            if (!editMode) {
+                saveLocal();
+                publishToGitHub();
+            }
             renderBooks();
         });
 
@@ -335,9 +379,11 @@
             } else {
                 booksData[i].recommended = !booksData[i].recommended;
             }
+            saveLocal();
             renderBooks();
         });
 
+        // Add book
         const addModal = document.getElementById('add-book-modal');
         document.getElementById('add-book-btn').addEventListener('click', () => addModal.classList.add('open'));
         document.getElementById('modal-cancel').addEventListener('click', () => addModal.classList.remove('open'));
@@ -352,13 +398,15 @@
                 recommended: document.getElementById('book-recommended').checked,
                 status: document.getElementById('book-reading').checked ? 'reading' : 'done'
             });
+            saveLocal();
+            publishToGitHub();
             renderBooks();
-            saveBooks();
             document.getElementById('add-book-form').reset();
             document.getElementById('book-reading').checked = true;
             addModal.classList.remove('open');
         });
 
+        // Filters
         document.querySelectorAll('.book-filter').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelector('.book-filter.active').classList.remove('active');
