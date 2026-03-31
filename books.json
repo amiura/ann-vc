@@ -74,7 +74,7 @@
     "author": "Marcus Aurelius",
     "cover": "https://m.media-amazon.com/images/I/71i6uTU-9sL.jpg",
     "recommended": true,
-    "status": "reading"
+    "status": "done"
   },
   {
     "title": "A Place for Us",
@@ -130,20 +130,20 @@
     "author": "Susan Choi",
     "cover": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1732124223i/219743621.jpg",
     "recommended": false,
-    "status": "reading"
+    "status": "done"
   },
   {
     "title": "The Irony of American History",
     "author": "Reinhold Niebuhr",
     "cover": "https://m.media-amazon.com/images/I/913HdQbKP5L.jpg",
     "recommended": false,
-    "status": "reading"
+    "status": "done"
   },
   {
     "title": "James",
     "author": "Percival Everett",
     "cover": "https://m.media-amazon.com/images/I/71vz-ZouXtL.jpg",
     "recommended": false,
-    "status": "reading"
+    "status": "done"
   }
 ]
