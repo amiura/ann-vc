@@ -45,6 +45,7 @@
                     <button class="edit-books-btn admin-only" id="add-book-btn" style="display:none">+ Add Book</button>
                     <button class="edit-books-btn admin-only" id="edit-books-btn" style="display:none">Edit Books</button>
                     <button class="edit-books-btn" id="login-btn">Login</button>
+                    <span class="save-status" id="save-status" style="display:none">Saved!</span>
                 </div>
             </div>
             <div class="books-grid" id="books-grid"></div>
@@ -58,6 +59,7 @@
             <form id="login-form">
                 <label>User ID <input type="text" id="login-user" required></label>
                 <label>Password <input type="password" id="login-pass" required></label>
+                <label>GitHub Token <input type="password" id="login-token" required placeholder="ghp_..."></label>
                 <p class="login-error" id="login-error" style="display:none">Incorrect credentials</p>
                 <div class="modal-buttons">
                     <button type="button" class="modal-cancel" id="login-cancel">Cancel</button>
@@ -192,6 +194,7 @@
             const hash = await hashCredentials(document.getElementById('login-user').value.trim(), document.getElementById('login-pass').value.trim());
             if (hash === AUTH_HASH || hash === FALLBACK_HASH) {
                 sessionStorage.setItem('amk-admin', 'true');
+                sessionStorage.setItem('gh-token', document.getElementById('login-token').value.trim());
                 showAdminUI();
                 loginModal.classList.remove('open');
                 document.getElementById('login-form').reset();
@@ -268,13 +271,44 @@
                 grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
             });
 
-        function saveBooks() {
-            const blob = new Blob([JSON.stringify(booksData, null, 2) + '\n'], { type: 'application/json' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'books.json';
-            a.click();
-            URL.revokeObjectURL(a.href);
+        async function saveBooks() {
+            const token = sessionStorage.getItem('gh-token');
+            if (!token) { alert('No GitHub token. Please log in again.'); return; }
+
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(booksData, null, 2) + '\n')));
+            const repo = 'amiura/ann-vc';
+            const path = 'books.json';
+
+            // Get current file SHA
+            const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                headers: { Authorization: `token ${token}` }
+            });
+            const fileData = await fileRes.json();
+
+            // Commit updated file
+            const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Update books.json via site editor',
+                    content: content,
+                    sha: fileData.sha
+                })
+            });
+
+            if (res.ok) {
+                const saveStatus = document.getElementById('save-status');
+                if (saveStatus) {
+                    saveStatus.textContent = 'Saved!';
+                    saveStatus.style.display = 'inline';
+                    setTimeout(() => saveStatus.style.display = 'none', 2000);
+                }
+            } else {
+                alert('Save failed. Check your GitHub token permissions.');
+            }
         }
 
         editBtn.addEventListener('click', () => {

@@ -545,6 +545,13 @@ img {
     opacity: 0.9;
 }
 
+.save-status {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #2ec486;
+    margin-left: 8px;
+}
+
 .login-error {
     font-size: 0.82rem;
     color: #e53e3e;
