@@ -175,7 +175,7 @@
 
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const hash = await hashCredentials(document.getElementById('login-user').value, document.getElementById('login-pass').value);
+            const hash = await hashCredentials(document.getElementById('login-user').value.trim(), document.getElementById('login-pass').value.trim());
             if (hash === AUTH_HASH) {
                 sessionStorage.setItem('amk-admin', 'true');
                 showAdminUI();
