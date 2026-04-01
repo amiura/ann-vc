@@ -209,7 +209,7 @@
             .then(data => {
                 data.items.slice(0, 2).forEach(item => {
                     const img = item.thumbnail || extractImage(item.content || item.description) || '';
-                    const excerpt = extractExcerpt(item.description || item.content || '', 200);
+                    const excerpt = extractExcerpt(item.description || item.content || '', 500);
                     const tag = (item.categories && item.categories[0]) || '';
 
                     const article = document.createElement('article');
