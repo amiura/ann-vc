@@ -237,6 +237,10 @@
         const grid = document.getElementById('books-grid');
         const editBtn = document.getElementById('edit-books-btn');
 
+        function amazonLink(title, author) {
+            return 'https://www.amazon.com/s?k=' + encodeURIComponent(title + ' ' + author);
+        }
+
         function showStatus(msg) {
             const el = document.getElementById('save-status');
             if (el) { el.textContent = msg; el.style.display = 'inline'; setTimeout(() => el.style.display = 'none', 2500); }
@@ -245,7 +249,12 @@
         function renderBooks() {
             grid.innerHTML = '';
             booksData.forEach((book, i) => {
-                const card = document.createElement('div');
+                const tag = editMode ? 'div' : 'a';
+                const card = document.createElement(tag);
+                if (!editMode) {
+                    card.href = amazonLink(book.title, book.author);
+                    card.target = '_blank';
+                }
                 card.className = 'book-card fade-in visible';
                 card.dataset.recommended = book.recommended ? 'yes' : 'no';
                 card.dataset.status = book.status;
