@@ -688,6 +688,16 @@ img {
     color: #fff;
 }
 
+.delete-toggle {
+    border-color: #e53e3e !important;
+    color: #e53e3e !important;
+}
+
+.delete-toggle:hover {
+    background: #e53e3e !important;
+    color: #fff !important;
+}
+
 .books-edit-mode .book-card {
     cursor: default;
 }
