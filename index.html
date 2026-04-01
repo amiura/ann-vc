@@ -58,33 +58,7 @@
     <section class="posts" id="writing">
         <div class="container">
             <h2 class="section-title fade-in">Latest Writing</h2>
-            <div class="posts-grid">
-
-                <article class="post-card fade-in">
-                    <div class="post-image">
-                        <img src="images/Thunderlizard_on_a_wave.jpg" alt="Era of Mass Cognition">
-                    </div>
-                    <div class="post-content">
-                        <span class="post-tag">AI</span>
-                        <h3>Era of Mass Cognition</h3>
-                        <p>We've lived through the eras of Mass Compute and Mass Connectivity — but today we're entering something even bigger: Mass Cognition. For the first time, compute has an API to humans, and it will reshape who can build, how fast they can learn, and where value accrues.</p>
-                        <a href="https://substack.com/home/post/p-174047957" target="_blank" class="read-more">Read More &rarr;</a>
-                    </div>
-                </article>
-
-                <article class="post-card fade-in">
-                    <div class="post-image">
-                        <img src="images/e9ccdf5f17270fc886befcb594b9a303de3488fb3b9e446523864f313ba7a3de.jpg" alt="Superthinkers and Superbuilders">
-                    </div>
-                    <div class="post-content">
-                        <span class="post-tag">Founders</span>
-                        <h3>Superthinkers &amp; Superbuilders</h3>
-                        <p>Your potential isn't defined by the logo on your resume — it's revealed in the habits you've built, the curiosity you chase, and the way you turn ideas into reality. Those are the marks of Superthinkers and Superbuilders&hellip;</p>
-                        <a href="https://annimaniac.substack.com/p/superthinkers-and-superbuilders" target="_blank" class="read-more">Read More &rarr;</a>
-                    </div>
-                </article>
-
-            </div>
+            <div class="posts-grid" id="posts-grid"></div>
             <a href="writing.html" class="view-all fade-in">View All Writing &rarr;</a>
         </div>
     </section>
@@ -214,6 +188,46 @@
                     `;
                     featuredGrid.appendChild(card);
                 });
+            });
+
+        // Load latest 2 posts from Substack RSS
+        const FEED_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fannimaniac.substack.com%2Ffeed';
+        const postsGrid = document.getElementById('posts-grid');
+
+        function extractImage(html) {
+            const m = html.match(/<img[^>]+src="([^"]+)"/);
+            return m ? m[1] : null;
+        }
+
+        function extractExcerpt(html, len) {
+            const text = html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+            return text.length > len ? text.substring(0, len).replace(/\s\S*$/, '') + '…' : text;
+        }
+
+        fetch(FEED_URL)
+            .then(r => r.json())
+            .then(data => {
+                data.items.slice(0, 2).forEach(item => {
+                    const img = item.thumbnail || extractImage(item.content || item.description) || '';
+                    const excerpt = extractExcerpt(item.description || item.content || '', 200);
+                    const tag = (item.categories && item.categories[0]) || '';
+
+                    const article = document.createElement('article');
+                    article.className = 'post-card fade-in';
+                    article.innerHTML = `
+                        <div class="post-image">
+                            <img src="${img}" alt="${item.title}">
+                        </div>
+                        <div class="post-content">
+                            ${tag ? `<span class="post-tag">${tag}</span>` : ''}
+                            <h3>${item.title}</h3>
+                            <p>${excerpt}</p>
+                            <a href="${item.link}" target="_blank" class="read-more">Read More &rarr;</a>
+                        </div>
+                    `;
+                    postsGrid.appendChild(article);
+                });
+                postsGrid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
             });
     </script>
 
