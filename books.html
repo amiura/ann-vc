@@ -16,8 +16,8 @@
         <div class="container">
             <a href="index.html" class="nav-brand">AMK</a>
             <div class="nav-links">
-                <a href="index.html#about">About</a>
-                <a href="index.html#investments">Investments</a>
+                <a href="about.html">About</a>
+                <a href="investments.html">Investments</a>
                 <a href="books.html" class="active">Books</a>
                 <a href="writing.html">Writing</a>
                 <a href="index.html#contact">Contact</a>
@@ -105,7 +105,8 @@
 
     <footer>
         <div class="container">
-            <div class="footer-content">
+            <div class="footer-content fade-in">
+                <h2>Let's Connect</h2>
                 <div class="social-links">
                     <a href="https://annimaniac.substack.com" target="_blank">Substack</a>
                     <a href="https://twitter.com/annimaniac" target="_blank">X / Twitter</a>
@@ -183,12 +184,7 @@
             return h.toString(16);
         }
 
-        const FALLBACK_HASH = (() => {
-            const s = 'amiura:wonderdog';
-            let h = 0;
-            for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
-            return h.toString(16);
-        })();
+        const FALLBACK_HASH = '-d454592';
 
         function showAdminUI() {
             document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
