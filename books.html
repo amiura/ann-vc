@@ -44,6 +44,7 @@
                 <div class="book-actions">
                     <button class="edit-books-btn admin-only" id="add-book-btn" style="display:none">+ Add Book</button>
                     <button class="edit-books-btn admin-only" id="edit-books-btn" style="display:none">Edit Books</button>
+                    <button class="edit-books-btn admin-only" id="change-token-btn" style="display:none">Change Token</button>
                     <button class="edit-books-btn" id="login-btn">Login</button>
                     <span class="save-status" id="save-status" style="display:none">Saved!</span>
                 </div>
@@ -224,7 +225,14 @@
             e.preventDefault();
             localStorage.setItem('gh-token', document.getElementById('setup-token').value.trim());
             tokenModal.classList.remove('open');
+            document.getElementById('token-form').reset();
             showStatus('Token saved!');
+        });
+
+        // Change/rotate token from the admin UI
+        document.getElementById('change-token-btn').addEventListener('click', () => {
+            document.getElementById('token-form').reset();
+            tokenModal.classList.add('open');
         });
 
         // Books system
