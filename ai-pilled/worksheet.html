@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>The AI-Pilled Enterprise — A CxO Self-Assessment</title>
+<style>
+  :root{
+    --ink:#16181d; --ink-soft:#3c424d; --muted:#6b7280; --line:#e4e6ea;
+    --paper:#ffffff; --wash:#f7f8fa; --accent:#c8102e; --accent-soft:#fbeaec;
+    --good:#0f7a52; --good-soft:#e7f4ee; --warn:#b25e00; --warn-soft:#fcf1e3;
+    --maxw:860px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--wash); color:var(--ink);
+    font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; background:var(--paper);
+    box-shadow:0 1px 0 var(--line), 0 24px 60px -40px rgba(0,0,0,.4);}
+  header.masthead{
+    padding:46px 54px 34px; border-bottom:3px solid var(--ink);
+    background:linear-gradient(180deg,#fff, #fff);
+  }
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font:600 12px/1 -apple-system,sans-serif; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 18px;
+  }
+  .kicker .mark{display:inline-block;width:9px;height:9px;background:var(--accent);
+    transform:rotate(45deg);border-radius:1px}
+  h1.title{font-size:38px; line-height:1.1; letter-spacing:-.02em; margin:0 0 12px; font-weight:800}
+  .event{color:var(--muted); font-size:14.5px; margin:0; letter-spacing:.01em}
+  .event b{color:var(--ink-soft); font-weight:600}
+  main{padding:38px 54px 20px}
+  p{margin:0 0 16px}
+  h2{font-size:13px; letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+    margin:46px 0 16px; font-weight:700; padding-bottom:8px; border-bottom:1px solid var(--line)}
+  h3{font-size:20px; letter-spacing:-.01em; margin:34px 0 4px; font-weight:700}
+  h3 .dim{color:var(--muted); font-weight:500; font-size:15px}
+  .lead{font-size:18.5px; color:var(--ink-soft)}
+  .rules{counter-reset:rule; margin:24px 0 8px; padding:0; list-style:none}
+  .rules li{position:relative; padding:16px 18px 16px 56px; margin:0 0 12px;
+    background:var(--wash); border:1px solid var(--line); border-radius:10px}
+  .rules li::before{counter-increment:rule; content:counter(rule);
+    position:absolute; left:16px; top:15px; width:26px; height:26px; border-radius:50%;
+    background:var(--ink); color:#fff; font:700 14px/26px sans-serif; text-align:center}
+  .rules b{color:var(--ink)}
+
+  /* worksheet */
+  .sheet{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:8px 0 6px}
+  .sheet .row{display:grid; grid-template-columns:42px 1fr auto; gap:0; align-items:center;
+    border-top:1px solid var(--line); background:#fff}
+  .sheet .row:first-child{border-top:none}
+  .sheet .qid{font-weight:800; text-align:center; color:var(--accent); padding:14px 0;
+    align-self:stretch; display:flex; align-items:center; justify-content:center;
+    border-right:1px solid var(--line); background:var(--wash)}
+  .sheet .qtext{padding:13px 16px}
+  .sheet .qtext .dn{font-weight:700; font-size:14px; letter-spacing:.02em}
+  .sheet .qtext .qq{color:var(--ink-soft); font-size:14.5px; line-height:1.45}
+  .opts{display:flex; gap:6px; padding:10px 16px 10px 8px}
+  .opts label{cursor:pointer}
+  .opts input{position:absolute; opacity:0; pointer-events:none}
+  .opts .pip{display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:8px; border:1.5px solid var(--line);
+    font-weight:700; color:var(--muted); background:#fff; transition:.12s}
+  .opts label:hover .pip{border-color:var(--ink-soft); color:var(--ink)}
+  .opts input:checked + .pip{background:var(--ink); border-color:var(--ink); color:#fff}
+  .readout{margin:14px 0 4px; padding:16px 18px; border-radius:12px;
+    background:var(--accent-soft); border:1px solid #f3c9cf; font-size:15px}
+  .readout .lvl{font-weight:800; font-size:17px}
+  .readout .hint{color:var(--ink-soft)}
+  .readout.dim2{background:var(--wash); border-color:var(--line)}
+
+  /* question detail */
+  .qblock{margin:0 0 6px}
+  ol.anchors{list-style:none; margin:14px 0 6px; padding:0; counter-reset:opt}
+  ol.anchors li{position:relative; padding:10px 14px 10px 44px; margin:0 0 8px;
+    border:1px solid var(--line); border-radius:9px; font-size:15.5px; line-height:1.5}
+  ol.anchors li::before{content:"A"; counter-increment:opt;
+    position:absolute; left:11px; top:9px; width:24px; height:24px; border-radius:6px;
+    background:var(--wash); border:1px solid var(--line);
+    font:700 13px/22px sans-serif; text-align:center; color:var(--ink-soft)}
+  ol.anchors li:nth-child(1)::before{content:"A"}
+  ol.anchors li:nth-child(2)::before{content:"B"}
+  ol.anchors li:nth-child(3)::before{content:"C"}
+  ol.anchors li:nth-child(4)::before{content:"D"}
+  ol.anchors li:nth-child(3){border-color:#cfe7dc; background:linear-gradient(0deg,var(--good-soft),var(--good-soft))}
+  ol.anchors li:nth-child(3)::before{background:var(--good); color:#fff; border-color:var(--good)}
+  ol.anchors li:nth-child(4){border-color:#cfe7dc; background:linear-gradient(0deg,var(--good-soft),var(--good-soft))}
+  ol.anchors li:nth-child(4)::before{background:var(--good); color:#fff; border-color:var(--good)}
+  .note{border-left:3px solid var(--accent); background:var(--accent-soft);
+    padding:12px 16px; border-radius:0 9px 9px 0; margin:8px 0 4px; font-size:15px}
+  .note b{color:var(--accent)}
+
+  .score pre{background:var(--ink); color:#e9edf2; padding:18px 20px; border-radius:10px;
+    font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; overflow:auto}
+  .frontier li{margin:0 0 10px}
+  ul.front{list-style:none; padding:0; margin:14px 0}
+  ul.front li{position:relative; padding:12px 16px 12px 18px; margin:0 0 10px;
+    border:1px solid var(--line); border-left:3px solid var(--good); border-radius:0 9px 9px 0;
+    background:#fff; font-size:15px}
+  ul.front li b{color:var(--ink)}
+  .num{color:var(--accent); font-weight:700}
+
+  footer{padding:26px 54px 40px; color:var(--muted); font-size:13px; border-top:1px solid var(--line)}
+  .toolbar{position:sticky; top:0; z-index:5; display:flex; justify-content:flex-end; gap:10px;
+    padding:10px 54px; background:rgba(255,255,255,.86); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line)}
+  .btn{font:600 13px sans-serif; border:1px solid var(--ink); background:var(--ink); color:#fff;
+    padding:8px 14px; border-radius:8px; cursor:pointer}
+  .btn.ghost{background:#fff; color:var(--ink)}
+  .btn:hover{opacity:.9}
+
+  @media (max-width:680px){
+    header.masthead,main,footer,.toolbar{padding-left:22px; padding-right:22px}
+    h1.title{font-size:29px}
+    .sheet .row{grid-template-columns:36px 1fr; }
+    .opts{grid-column:1/-1; justify-content:flex-start; padding:0 14px 12px 14px}
+  }
+  @media print{
+    body{background:#fff}
+    .wrap{box-shadow:none; max-width:none}
+    .toolbar{display:none}
+    .note,.readout,ol.anchors li:nth-child(3),ol.anchors li:nth-child(4){-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h3{page-break-after:avoid}
+    .qblock{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="toolbar">
+    <button class="btn ghost" onclick="resetSheet()">Reset</button>
+    <button class="btn" onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <header class="masthead">
+    <p class="kicker"><span class="mark"></span> Floodgate · The AI-Pilled Enterprise</p>
+    <h1 class="title">A CxO Self-Assessment</h1>
+    <p class="event"><b>Executive Enterprise AI Forum</b> &nbsp;·&nbsp; Paris &nbsp;·&nbsp; July 7, 2026 &nbsp;·&nbsp; Held under Chatham House Rules</p>
+  </header>
+
+  <main>
+    <p class="lead">Most "AI transformation" conversations measure the wrong thing. They count seats, pilots, trainings, and town-hall mentions — and conclude the company is further along than it is. This instrument measures something harder to fake: <b>how much of your organization's real work AI can now <em>see</em>, <em>do</em>, <em>extend</em>, and <em>change</em>.</b></p>
+
+    <p>It comes from a maturity model built on field visits to the most AI-native companies operating today — the startups several of you will meet at this forum. Those companies aren't "AI-positive enterprises with high adoption." They are organizations whose <em>operating model has changed</em> because AI can read the work, act on it, extend it, and improve it without routing through human bureaucracy. That is a different bar, and it's the one that separates the companies that compound from the ones that plateau.</p>
+
+    <p>The same four questions you'll use to place your own organization are exactly the questions worth asking any AI-native company you advise, invest in, or join the board of. That is the dual use of this page.</p>
+
+    <h2>Two rules before you start</h2>
+    <ol class="rules">
+      <li><b>Grade against your own honest operation, not against the startups.</b> Almost every Fortune 500 organization sits low on this scale today — that is the <em>normal</em> answer, not a failing. A genuine <b>C</b> on any dimension already puts you ahead of nearly all of your peers; a <b>D</b> is the frontier that, as of mid-2026, essentially only AI-native companies have reached. The value isn't the score — it's locating your <b>binding constraint</b>, the one dimension holding everything else back.</li>
+      <li><b>If you can't name the example, it doesn't count.</b> For any answer at C or D, name the specific system, team, person, or number. If you can't name it, drop to the next lower option. Aspirational answers make this diagnostic worse than useless — your sharper competitors get sharper while you congratulate yourself. The only useful version of this exercise is the painful one.</li>
+    </ol>
+
+    <h2>The worksheet</h2>
+    <p>Pick the letter that best describes your organization <b>today</b> — not where you intend to be next quarter. Full question text and the C/D evidence bar follow below. Your read updates live.</p>
+
+    <div class="sheet" id="sheet">
+      <div class="row" data-q="1" data-primary="0">
+        <div class="qid">Q1</div>
+        <div class="qtext"><div class="dn">Leadership fluency <span style="color:var(--muted);font-weight:500">· cross-cutting</span></div><div class="qq">Do the people running the company personally operate with AI — or only sponsor it?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q1" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q1" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q1" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q1" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+      <div class="row" data-q="2" data-primary="0">
+        <div class="qid">Q2</div>
+        <div class="qtext"><div class="dn">Measurable outcomes <span style="color:var(--muted);font-weight:500">· cross-cutting / unfakeable</span></div><div class="qq">Can you cite a P&amp;L-relevant result AI moved, traced to a bottleneck you deliberately aimed it at?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q2" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q2" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q2" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q2" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+      <div class="row" data-q="3" data-primary="1">
+        <div class="qid">Q3</div>
+        <div class="qtext"><div class="dn">What can AI <em>see</em>? <span style="color:var(--muted);font-weight:500">· legibility</span></div><div class="qq">Are your systems of record agent-accessible — read <em>and</em> governed write — across the legacy estate, not just the modern apps?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q3" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q3" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q3" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q3" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+      <div class="row" data-q="4" data-primary="1">
+        <div class="qid">Q4</div>
+        <div class="qtext"><div class="dn">What can AI <em>do</em>? <span style="color:var(--muted);font-weight:500">· executable</span></div><div class="qq">What is the most consequential decision your agents make <em>without human approval</em>?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q4" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q4" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q4" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q4" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+      <div class="row" data-q="5" data-primary="1">
+        <div class="qid">Q5</div>
+        <div class="qtext"><div class="dn">Who can <em>extend</em> it? <span style="color:var(--muted);font-weight:500">· extensibility</span></div><div class="qq">What have your <em>non-IT</em> people actually built and shipped that others depend on?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q5" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q5" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q5" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q5" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+      <div class="row" data-q="6" data-primary="1">
+        <div class="qid">Q6</div>
+        <div class="qtext"><div class="dn">How has the org <em>changed</em>? <span style="color:var(--muted);font-weight:500">· structural</span></div><div class="qq">What changed about how the company is <em>run</em> — spans, layers, approval chains, headcount plan — not the tools you added?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q6" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q6" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q6" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q6" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+      <div class="row" data-q="7" data-primary="0">
+        <div class="qid">Q7</div>
+        <div class="qtext"><div class="dn">Does it <em>notice</em>? <span style="color:var(--muted);font-weight:500">· the frontier</span></div><div class="qq">What did a system surface to leadership that <em>no human framed as a question first</em>?</div></div>
+        <div class="opts">
+          <label><input type="radio" name="q7" value="1"><span class="pip">A</span></label>
+          <label><input type="radio" name="q7" value="2"><span class="pip">B</span></label>
+          <label><input type="radio" name="q7" value="3"><span class="pip">C</span></label>
+          <label><input type="radio" name="q7" value="4"><span class="pip">D</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="readout dim2" id="readout">
+      <span class="hint">Answer Q3–Q6 to see your operational level. Your level is the <b>lowest</b> of the four primary dimensions — that's your binding constraint.</span>
+    </div>
+
+    <h2>The seven questions</h2>
+
+    <div class="qblock">
+      <h3>Q1 — Leadership fluency <span class="dim">· cross-cutting</span></h3>
+      <p>Walk through the last 24 hours of your own and your senior team's personal AI usage. Not the budget you approved — the work you personally did with it.</p>
+      <ol class="anchors">
+        <li>Leadership talks about AI in board decks and town halls but doesn't personally use it in daily work.</li>
+        <li>Some executives use ChatGPT / Copilot / Claude personally for drafting or summarizing — ad hoc, no shared practice.</li>
+        <li>The senior team works AI into real decisions and runs a deliberate executive-fluency program: leaders <em>demonstrate</em> workflows, they don't just fund them.</li>
+        <li>AI fluency is a leadership competency — in executive onboarding, demonstrated top-down, with the people driving the AI agenda being operators who build with it, not only a central "Head of AI."</li>
+      </ol>
+      <div class="note"><b>The disconnect pattern is a hard tell.</b> A glossy AI strategy, a newly hired Chief AI Officer, and a leadership team that has never personally run a workflow is L0–L1 regardless of the deck. Sponsorship is not fluency.</div>
+    </div>
+
+    <div class="qblock">
+      <h3>Q2 — Measurable business outcomes <span class="dim">· cross-cutting / unfakeable</span></h3>
+      <p>Cite one to three measurable outcomes from AI in the last 90 days, each tied to a <em>business result</em> — cost, revenue, cycle time, risk — not to activity. A single outcome counts if it's large enough in scale. What this really tests: can you point to where AI was aimed at a real <b>bottleneck</b> and changed the result?</p>
+      <ol class="anchors">
+        <li>I can't cite one. AI feels useful, but I can't point to a business outcome it actually moved.</li>
+        <li>I can describe one or two improvements ("response times dropped," "the bot deflects tickets") — but not quantified, and not clearly tied to a business result.</li>
+        <li>At least one quantified outcome tied to a real business result — and we can name the bottleneck in the workflow we deliberately aimed AI at.</li>
+        <li>Every function or business unit can do this for itself — map its workflows, find the bottleneck, aim AI at it, deliver the result — without waiting on a central AI center of excellence. Outcomes are routine and attributable.</li>
+      </ol>
+      <div class="note"><b>The enterprise false positive is "pilot purgatory":</b> dozens of proofs-of-concept, seats provisioned, employees trained — and nothing in production traced to a number. Seats and trainings are activity metrics; they're theatrical. A bottleneck <em>named and moved</em> is operational.</div>
+    </div>
+
+    <div class="qblock">
+      <h3>Q3 — What can AI <em>see</em>? <span class="dim">· legibility</span></h3>
+      <p>Are your core systems agent-accessible via API / MCP / well-defined interfaces — so agents can query <em>and</em> act, not just read? Count <b>both layers</b>: the <b>applications</b> (ERP, CRM, support, billing, procurement, HRIS) <em>and</em> the <b>data and code layer</b> (warehouse/lake, transactional systems, codebase). In an enterprise, the hard part is the legacy estate, not the one modern cloud app.</p>
+      <ol class="anchors">
+        <li>None. Agents can't reach our applications, our databases, or our code in any structured way.</li>
+        <li>One or two modern systems are readable — an agent can query a cloud CRM or the data lake — but most systems of record, especially legacy ERP, are walled off, and nothing has write access.</li>
+        <li>Most modern applications and the data warehouse are queryable; one or two systems have <b>bounded, governed write access</b> for routine operations.</li>
+        <li>Applications, the warehouse, transactional systems, and code are all agent-accessible for read and governed write — within scoped permissions and a real audit layer. An agent can answer a question that spans systems — <em>what shipped, who asked, what customers said, what it cost</em> — and act on it.</li>
+      </ol>
+      <div class="note"><b>Governance is part of the answer, not the opposite of it.</b> In a regulated enterprise, "agent-accessible" at C+ means <em>through</em> a permissioning, data-residency, and audit layer — not despite one. A landfill of recorded meetings and dashboards is capture, not legibility; an inert archive is not an operating system.</div>
+    </div>
+
+    <div class="qblock">
+      <h3>Q4 — What can AI <em>do</em>? <span class="dim">· executable</span></h3>
+      <p>What is the most consequential decision your agents make <em>without human approval</em>?</p>
+      <ol class="anchors">
+        <li>Nothing. Agents only summarize, draft, or surface; humans decide and execute everything.</li>
+        <li>Routine, templated actions — auto-reply to known FAQs, route a ticket to the right queue, classify an invoice or document.</li>
+        <li>Policy-driven decisions within scoped domains — auto-deny out-of-policy spend, auto-approve within thresholds, auto-remediate known issues, auto-route exceptions.</li>
+        <li>Novel decisions the system surfaces and acts on within delegated authority — escalating only when consequence or uncertainty exceeds its scope.</li>
+      </ol>
+      <div class="note"><b>The false positive here is RPA in a new outfit.</b> If a human configured the threshold or the rule, the human did the deciding — that's robotic automation with good dashboards, not agentic decision-making. The question is what the agent <em>decides</em>, not what it executes.</div>
+    </div>
+
+    <div class="qblock">
+      <h3>Q5 — Who can <em>extend</em> the system? <span class="dim">· extensibility</span></h3>
+      <p>What can the <b>non-IT</b> people at your company actually build with AI? Name the people and name what they shipped.</p>
+      <ol class="anchors">
+        <li>Business users use AI personally at most — anything built for others goes through IT.</li>
+        <li>Power users have customized AI for themselves, but haven't authored anything shared, documented, or sanctioned.</li>
+        <li>At least one business (non-IT) person has authored <em>and documented</em> a reusable skill or agent others use — with governance sign-off — and has their working context captured so an agent can act on their behalf.</li>
+        <li>Business users routinely author and document tools, have their context captured, and ship <b>production internal tooling</b> they uniquely understand — operational software others depend on — inside a governed platform, without IT driving each build.</li>
+      </ol>
+      <div class="note"><b>The gate here is usually cultural, not technical:</b> an "only engineering can build" posture, plus the absence of a safe, governed platform for citizen development (so the only building that happens is ungoverned shadow IT). Both have to move. The hard test: has a non-technical function shipped a load-bearing tool in the last 90 days?</div>
+    </div>
+
+    <div class="qblock">
+      <h3>Q6 — How has the <em>organization</em> changed? <span class="dim">· structural</span></h3>
+      <p>What has AI let you change about how the company is actually <em>run</em> — not the tools you added, but spans of control, management layers, approval chains, shared-services consolidation, the workforce plan, the operating-review calendar, the vendor footprint? Name the specific changes.</p>
+      <ol class="anchors">
+        <li>Nothing structural. The org chart, headcount plan, approval chains, and reporting cadence look pre-AI — we've only <em>added</em> AI tools and a center of excellence on top.</li>
+        <li>Minor adjustments — slowed backfill in a function or two, or retired a report or a meeting — but reporting structure, spans, approval chains, and role definitions are unchanged.</li>
+        <li>At least one structural change we can name and point to: a role redesigned or removed because AI does the work, a management layer removed, a status forum eliminated because information now flows in agent-readable form, a SaaS tool retired, <em>or</em> a human approval gate removed because an agent operates within delegated authority.</li>
+        <li>Multiple, and as policy: workforce plans that bake in AI capability, flatter spans, approval chains redrawn around agent authority, operating reviews generated by the system, <em>and</em> performance/promotion criteria that formally weight AI proficiency.</li>
+      </ol>
+      <div class="note"><b>The false positive is "we're running leaner" with nothing named.</b> Restructuring that can't name what specifically got redesigned, flattened, retired, or redrawn is a cost-cutting slogan, not AI-driven change.</div>
+    </div>
+
+    <div class="qblock">
+      <h3>Q7 — Does the system <em>notice</em> what no one asked it to? <span class="dim">· the frontier</span></h3>
+      <p>What did your AI systems notice, investigate, and surface to leadership in the last 90 days that <em>no human framed as a question first</em>? Name it, and name what you did about it.</p>
+      <ol class="anchors">
+        <li>Nothing. Agents only act on what someone explicitly asked.</li>
+        <li>Threshold alerts a human configured fire when crossed — the system flags, but only on conditions a person defined in advance.</li>
+        <li>One genuine instance — a system surfaced an issue nobody prompted it to look for, and leadership investigated and acted on it.</li>
+        <li>Routine — a named, always-on system whose configured goal is to raise leadership-actionable issues, generating investigation theses across the company's data and surfacing root causes no one framed as a question, with multiple instances already actioned.</li>
+      </ol>
+      <div class="note"><b>For a large enterprise, an honest answer here is almost always A or B — and that's expected.</b> This is the genuine frontier; as of mid-2026 only a handful of the most AI-native companies are approaching it. It's here for two reasons: it's the horizon you'll see demonstrated at this forum, and it's the sharpest single question to ask any startup you advise or board — <em>what did the system notice, decide, and act on that no human initiated?</em></div>
+    </div>
+
+    <h2>Scoring &amp; interpretation</h2>
+    <div class="score">
+      <p><b>Your operational level is the <em>lowest</em> of the four primary dimensions — Q3, Q4, Q5, Q6.</b> That dimension is your <b>binding constraint</b>: it's where your next intervention should focus, and improving any <em>other</em> dimension while it stays low buys you little. A → roughly L0–L1, B → L1–L2, C → L2–L3, D → L3–L4.</p>
+      <p><b>Q1 and Q2 are ceilings, not line items.</b> A leadership team below C on Q1, or a company below C on Q2, caps what the other dimensions can genuinely be — treat a low cross-cutting score as a lid on the whole read.</p>
+      <p><b>Q7 is the frontier gate, not a fifth dimension.</b> It only counts as C/D if Q6 is already C/D — you can't have a system noticing what no one asked while the org chart is still pre-AI.</p>
+
+      <p><b>Asymmetric reads are the rule — and the most useful output.</b> Almost no enterprise sits at the same level across all four. The shape tells you where to act:</p>
+      <ul>
+        <li><b>Sees a lot, can't <em>do</em> much</b> (high Q3, low Q4) — data piped into AI but every action gate kept with IT. <em>Next:</em> governed action APIs so agents can act, not just observe.</li>
+        <li><b>Does a lot, but only IT can <em>extend</em> it</b> (high Q4, low Q5) — a few leveraged engineers; everyone else locked out; wins don't propagate. <em>Next:</em> the citizen-development layer — a governed platform plus cultural permission for non-IT to build.</li>
+        <li><b>Sees and does, but the <em>org hasn't changed</em></b> (high Q3/Q4, low Q6) — infrastructure in, hierarchy defended. Without structural change it regresses. <em>Next:</em> structural courage — redesign roles, flatten spans, redraw approval chains around agent authority.</li>
+        <li><b>The org changed but the <em>substrate is thin</em></b> (high Q6, low Q3) — a reorg announced without the legibility layer underneath. It will revert. <em>Next:</em> build the substrate first.</li>
+      </ul>
+      <p><b>One caveat for conglomerates and multi-BU groups:</b> place each business unit separately. You can be L4 in one unit and L0 in another, and the group-level average hides exactly the read you need.</p>
+    </div>
+
+    <h2>What the frontier actually looks like</h2>
+    <p>So the C/D anchors aren't abstract — these are real, named AI-native companies, several of whom are in this ecosystem. This is the bar the startups you may advise or board are setting:</p>
+    <ul class="front frontier">
+      <li><b>Legibility (Q3 = D):</b> one company's customer-intelligence agent ingests sales calls, support tickets, session recordings, and survey data into a single queryable layer — so "which pain points are rising, in which segments, and did the last release move them?" is one query, not a cross-functional meeting.</li>
+      <li><b>Executable (Q4 = C/D):</b> policy agents that auto-deny out-of-policy spend from an uploaded travel policy; security agents that detect, validate, fix, and file the change with a human only at the merge step — finding ~100 vulnerabilities in six days with zero humans in the loop.</li>
+      <li><b>Extensibility (Q5 = D):</b> a learning-and-development lead who built a training simulator in 15 minutes; a finance person who built a contract reviewer saving 45 minutes per contract — <em>none of them engineers</em>, none of them waiting on a ticket.</li>
+      <li><b>Structural (Q6 = C/D):</b> companies running with zero product managers at 50 people, or no new hires until their next financing round — naming the specific roles AI displaced rather than gesturing at "running lean."</li>
+      <li><b>Frontier (Q7 = D):</b> an autonomous system, fed no specific question, that surfaced <span class="num">$2.46M</span> in unapplied credit notes traced from a single customer complaint, and a product feature pulled from a passing mention in an all-hands transcript — multiple findings actioned by leadership. As of mid-2026 this is roughly the leading edge of what exists.</li>
+    </ul>
+    <p>You won't match these on day one — almost no large enterprise does. But they're the calibration, and they're the operating model worth understanding before you advise, invest in, or join the board of the next generation of these companies.</p>
+
+  </main>
+
+  <footer>
+    Framework: the AI-Pilled Organization Maturity Model (Floodgate). Self-administered; intended to take 10–15 minutes and to be re-taken quarterly — track the direction and which constraint is binding, not the absolute number.
+  </footer>
+</div>
+
+<script>
+  var LV = {1:"L0–L1", 2:"L1–L2", 3:"L2–L3", 4:"L3–L4"};
+  var PRIMARY = ["q3","q4","q5","q6"];
+  function val(name){
+    var el = document.querySelector('input[name="'+name+'"]:checked');
+    return el ? parseInt(el.value,10) : null;
+  }
+  function update(){
+    var ro = document.getElementById('readout');
+    var vals = PRIMARY.map(val);
+    var answered = vals.filter(function(v){return v!==null;});
+    if(answered.length < 4){
+      ro.className = 'readout dim2';
+      ro.innerHTML = '<span class="hint">Answer Q3–Q6 to see your operational level ('+answered.length+'/4 answered). Your level is the <b>lowest</b> of the four primary dimensions — that\'s your binding constraint.</span>';
+      return;
+    }
+    var min = Math.min.apply(null, vals);
+    var dimNames = {q3:"legibility (what AI can see)", q4:"executable (what AI can do)", q5:"extensibility (who can extend it)", q6:"structural (how the org changed)"};
+    var binding = PRIMARY.filter(function(n,i){return vals[i]===min;}).map(function(n){return dimNames[n];});
+    var q1=val('q1'), q2=val('q2');
+    var ceil = [];
+    if(q1!==null && q1<3) ceil.push('leadership fluency (Q1)');
+    if(q2!==null && q2<3) ceil.push('measurable outcomes (Q2)');
+    var html = '<div class="lvl">Operational level: '+LV[min]+'</div>';
+    html += '<div class="hint" style="margin-top:6px">Binding constraint: <b>'+binding.join(' &amp; ')+'</b>. That\'s where the next intervention goes — lifting any other dimension while this stays low buys little.</div>';
+    if(ceil.length){
+      html += '<div class="hint" style="margin-top:8px">⚠ Cross-cutting ceiling: you\'re below C on '+ceil.join(' and ')+'. Treat this as a lid on the whole read — it caps what the primary dimensions can genuinely be.</div>';
+    }
+    var q6=val('q6'), q7=val('q7');
+    if(q7!==null && q7>=3 && (q6===null || q6<3)){
+      html += '<div class="hint" style="margin-top:8px">⚠ Q7 only counts as C/D if Q6 is already C/D. A system that "notices" while the org chart is still pre-AI is almost always a false positive — re-read both.</div>';
+    }
+    ro.className = 'readout';
+    ro.innerHTML = html;
+  }
+  function resetSheet(){
+    document.querySelectorAll('#sheet input[type=radio]').forEach(function(r){r.checked=false;});
+    update();
+  }
+  document.querySelectorAll('#sheet input[type=radio]').forEach(function(r){
+    r.addEventListener('change', update);
+  });
+  update();
+</script>
+</body>
+</html>

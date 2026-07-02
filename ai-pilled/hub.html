@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>The AI-Pilled Enterprise · Floodgate</title>
+<meta name="description" content="A CxO diagnostic and field materials on what separates AI-native companies that compound from the ones that plateau."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#040E4C; --blue:#19D7FF; --blue-mid:#0C57A6; --grey:#9AA6BD;
+    --ink:#0b1538; --ink-soft:#3a4566; --muted:#69739a;
+    --line:rgba(4,14,76,.16); --line-soft:rgba(4,14,76,.09);
+    --paper:#ffffff; --bg-2:#f1f5fa; --bg-3:#e8f0f8;
+    --accent:#0C57A6; --accent-soft:#e8f0f8;
+    --lift:0 14px 30px rgba(4,14,76,.16);
+    --maxw:960px;
+  }
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden;max-width:100%}
+  body{margin:0;background:var(--bg-2);color:var(--ink);overflow-wrap:break-word;
+    font:16px/1.55 "Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--blue);color:var(--navy)}
+  em{font-style:italic;color:var(--blue-mid)}
+  a{color:var(--blue-mid)}
+  .wrap{max-width:var(--maxw);margin:0 auto;background:var(--paper);min-height:100vh;
+    border-left:1px solid var(--line-soft);border-right:1px solid var(--line-soft)}
+
+  /* ---- top bar ---- */
+  .toolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:12px 40px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand .fg-logo{height:22px;width:auto;display:block}
+  .brand .tl{height:34px;width:auto;display:block;transform-origin:55% 88%;
+    animation:tl-idle 5.5s ease-in-out infinite}
+  .brand:hover .tl{animation:tl-wiggle .55s ease}
+  .topcontact{font:700 17px/1.1 "Hanken Grotesk",sans-serif;color:var(--navy);text-decoration:none;letter-spacing:-.01em;white-space:nowrap}
+  .topcontact:hover{text-decoration:underline}
+  .topcontact .tc-email{color:var(--blue-mid)}
+  @keyframes tl-idle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-2deg)}}
+  @keyframes tl-wiggle{0%,100%{transform:rotate(0) translateY(0)}20%{transform:rotate(-9deg) translateY(-1px)}48%{transform:rotate(7deg)}72%{transform:rotate(-3deg)}}
+  @media (prefers-reduced-motion:reduce){.brand .tl{animation:none}}
+
+  /* ---- hero ---- */
+  header.hero{padding:56px 40px 40px;border-bottom:1px solid var(--line)}
+  .kicker{display:inline-block;font:800 11px/1 "Hanken Grotesk";letter-spacing:.16em;text-transform:uppercase;
+    color:var(--navy);background:var(--blue);padding:6px 10px;margin:0 0 20px}
+  h1.title{font-size:42px;line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;font-weight:800;max-width:18ch}
+  h1.title .thin{font-weight:500;color:var(--ink-soft)}
+  .lead{font-size:18px;line-height:1.55;color:var(--ink-soft);margin:0 0 14px;max-width:62ch}
+  .lead b{color:var(--ink);font-weight:600}
+  .event{color:var(--muted);font-size:13.5px;letter-spacing:.01em;margin:22px 0 0}
+  .event b{color:var(--ink-soft);font-weight:600}
+
+  /* ---- material cards ---- */
+  main{padding:40px 40px 20px}
+  .sec-label{font:800 11px/1 "Hanken Grotesk";letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 20px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--paper);
+    border:1px solid var(--line);padding:26px 26px 24px;transition:transform .2s ease,box-shadow .2s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--lift);border-color:var(--navy)}
+  .card.feature{grid-column:1 / -1;border-left:4px solid var(--blue)}
+  .card .tag{font:800 10.5px/1 "Hanken Grotesk";letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .card.feature .tag{color:var(--blue-mid)}
+  .card h3{font-size:21px;line-height:1.15;letter-spacing:-.01em;margin:0 0 8px;font-weight:700}
+  .card.feature h3{font-size:25px}
+  .card p{font-size:14.5px;line-height:1.5;color:var(--ink-soft);margin:0 0 16px}
+  .card .go{margin-top:auto;font:700 13.5px/1 "Hanken Grotesk";color:var(--navy);display:inline-flex;align-items:center;gap:7px}
+  .card .go .arr{color:var(--blue-mid);transition:transform .2s ease}
+  .card:hover .go .arr{transform:translateX(4px)}
+
+  /* ---- footer ---- */
+  footer.legal{padding:26px 40px 44px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+  footer.legal .fg-logo{height:16px;opacity:.85}
+  footer.legal a{color:var(--blue-mid);text-decoration:none}
+  footer.legal a:hover{text-decoration:underline}
+  footer.legal .spacer{flex:1}
+
+  @media (max-width:680px){
+    .toolbar{padding:10px 16px;flex-wrap:wrap;gap:10px}
+    header.hero{padding:38px 16px 30px}
+    main{padding:30px 16px 16px}
+    h1.title{font-size:30px}
+    .lead{font-size:16.5px}
+    .cards{grid-template-columns:1fr}
+    footer.legal{padding-left:16px;padding-right:16px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="toolbar">
+    <a class="brand" href="https://floodgate.com" target="_blank" rel="noopener" title="Floodgate — Thunder Lizard">
+      <svg class="fg-logo" viewBox="0 0 500 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Floodgate"><path d="M488.8 113.7L434.7 149.8H11V37.1H434.7L488.8 1V113.7Z" fill="#040E4C"></path><path d="M74.6 90.7V99.4H57.2V113.7H47.1V73.3H77.3V82.2H57.2V90.8H74.6V90.7Z" fill="#19D7FF"></path><path d="M84.8 113.7V73.3H94.9V104.9H114.9V113.8H84.8V113.7Z" fill="#19D7FF"></path><path d="M162.5 93.5C162.5 105.3 153.3 114.6 141 114.6C128.8 114.6 119.6 105.3 119.6 93.5C119.6 81.7 128.8 72.4 141 72.4C153.3 72.4 162.5 81.7 162.5 93.5ZM152.2 93.5C152.2 87.1 147.5 81.8 141 81.8C134.5 81.8 129.8 87.2 129.8 93.5C129.8 99.8 134.5 105.2 141 105.2C147.5 105.2 152.2 99.8 152.2 93.5Z" fill="#19D7FF"></path><path d="M212.3 93.5C212.3 105.3 203.1 114.6 190.8 114.6C178.6 114.6 169.4 105.3 169.4 93.5C169.4 81.7 178.6 72.4 190.8 72.4C203.1 72.4 212.3 81.7 212.3 93.5ZM202.1 93.5C202.1 87.1 197.4 81.8 190.9 81.8C184.4 81.8 179.7 87.2 179.7 93.5C179.7 99.8 184.4 105.2 190.9 105.2C197.4 105.2 202.1 99.8 202.1 93.5Z" fill="#19D7FF"></path><path d="M258.4 93.3C258.4 105.3 249.2 113.6 236.6 113.6H220.3V73.2H236.6C249.2 73.2 258.4 81.5 258.4 93.3ZM248.1 93.3C248.1 87.1 243 82.2 236.5 82.2H230.3V104.6H236.5C243.1 104.6 248.1 99.8 248.1 93.3Z" fill="#19D7FF"></path><path d="M300.8 113.7L300.4 108.8C297.5 112.4 293.3 114.5 287.6 114.5C274.9 114.5 266.1 105.5 266.1 93.9C266.1 81.3 275.4 72.4 287.7 72.4C297.6 72.4 306.1 78 307.9 87.6H297.4C295.6 82.9 291.6 81.6 287.9 81.6C281 81.6 276.2 86.5 276.2 93.6C276.2 100 280.8 105.1 288 105.1C292.7 105.1 296.3 102.8 298.2 98.9L286.6 98.8V90.9H308.3V113.6H300.8V113.7Z" fill="#19D7FF"></path><path d="M325.4 113.7H314.7L331.9 73H341.5L358.6 113.7H348L345.3 106.7H328.2L325.4 113.7ZM331.5 98.2H341.9L336.7 84.8L331.5 98.2Z" fill="#19D7FF"></path><path d="M380.2 113.7H370.1V82.2H357.2V73.2H393V82.2H380.2V113.7Z" fill="#19D7FF"></path><path d="M428.5 89.4V98H410.6V105H431.1V113.7H400.5V73.3H431.1V82H410.6V89.4H428.5Z" fill="#19D7FF"></path></svg>
+      <img class="tl" src="assets/thunderlizard.png" alt="Thunder Lizard"/>
+    </a>
+    <a class="topcontact" href="mailto:ann@floodgate.com">Ann Miura-Ko&nbsp;·&nbsp;<span class="tc-email">ann@floodgate.com</span></a>
+  </div>
+
+  <header class="hero">
+    <span class="kicker">The AI-Pilled Enterprise</span>
+    <h1 class="title">What can AI <span class="thin">see, do, extend,</span> and change?</h1>
+    <p class="lead">Most "AI transformation" conversations measure the wrong thing; they count seats, pilots, and trainings and conclude the company is further along than it is. These materials measure something harder to fake: <b>how much of your organization's real work AI can now see, do, extend, and change.</b></p>
+    <p class="lead">They come from a maturity model built on field visits to the most AI-native companies operating today — organizations whose <em>operating model has changed</em> because AI can read the work, act on it, and improve it without routing through human bureaucracy. That is the bar that separates the companies that compound from the ones that plateau.</p>
+    <p class="event"><b>Executive Enterprise AI Forum</b> · Paris · July 7, 2026 · Chatham House Rules</p>
+  </header>
+
+  <main>
+    <p class="sec-label">The materials</p>
+    <div class="cards">
+
+      <a class="card feature" href="index.html">
+        <span class="tag">Interactive diagnostic</span>
+        <h3>The CxO diagnostic</h3>
+        <p>A seven-question stepped assessment that places your organization on the L0–L5 maturity scale, names your binding constraint, and generates a personalized report and action brief. Start here.</p>
+        <span class="go">Take the assessment <span class="arr">&rarr;</span></span>
+      </a>
+
+      <a class="card" href="worksheet.html">
+        <span class="tag">Printable worksheet</span>
+        <h3>The self-assessment</h3>
+        <p>The full one-page instrument — all seven questions with the C/D evidence bar — as a static worksheet to print or work through by hand.</p>
+        <span class="go">Open the worksheet <span class="arr">&rarr;</span></span>
+      </a>
+
+      <a class="card" href="assets/L0-L5-Take-Away-Paris.pdf" target="_blank" rel="noopener">
+        <span class="tag">One-page framework · PDF</span>
+        <h3>From loops to levels</h3>
+        <p>The L0–L5 take-away: the maturity model on a single page, from human-in-the-loop to systems that notice what no one framed as a question.</p>
+        <span class="go">Download the PDF <span class="arr">&rarr;</span></span>
+      </a>
+
+      <a class="card" href="slide.html">
+        <span class="tag">Framework slide</span>
+        <h3>Data · Context · Skills · Harness</h3>
+        <p>The four concepts that determine what an AI system can actually do inside an enterprise, on a single 16:9 slide.</p>
+        <span class="go">View the slide <span class="arr">&rarr;</span></span>
+      </a>
+
+    </div>
+  </main>
+
+  <footer class="legal">
+    <svg class="fg-logo" viewBox="0 0 500 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Floodgate"><path d="M488.8 113.7L434.7 149.8H11V37.1H434.7L488.8 1V113.7Z" fill="#040E4C"></path><path d="M74.6 90.7V99.4H57.2V113.7H47.1V73.3H77.3V82.2H57.2V90.8H74.6V90.7Z" fill="#19D7FF"></path><path d="M84.8 113.7V73.3H94.9V104.9H114.9V113.8H84.8V113.7Z" fill="#19D7FF"></path><path d="M162.5 93.5C162.5 105.3 153.3 114.6 141 114.6C128.8 114.6 119.6 105.3 119.6 93.5C119.6 81.7 128.8 72.4 141 72.4C153.3 72.4 162.5 81.7 162.5 93.5ZM152.2 93.5C152.2 87.1 147.5 81.8 141 81.8C134.5 81.8 129.8 87.2 129.8 93.5C129.8 99.8 134.5 105.2 141 105.2C147.5 105.2 152.2 99.8 152.2 93.5Z" fill="#19D7FF"></path><path d="M212.3 93.5C212.3 105.3 203.1 114.6 190.8 114.6C178.6 114.6 169.4 105.3 169.4 93.5C169.4 81.7 178.6 72.4 190.8 72.4C203.1 72.4 212.3 81.7 212.3 93.5ZM202.1 93.5C202.1 87.1 197.4 81.8 190.9 81.8C184.4 81.8 179.7 87.2 179.7 93.5C179.7 99.8 184.4 105.2 190.9 105.2C197.4 105.2 202.1 99.8 202.1 93.5Z" fill="#19D7FF"></path><path d="M258.4 93.3C258.4 105.3 249.2 113.6 236.6 113.6H220.3V73.2H236.6C249.2 73.2 258.4 81.5 258.4 93.3ZM248.1 93.3C248.1 87.1 243 82.2 236.5 82.2H230.3V104.6H236.5C243.1 104.6 248.1 99.8 248.1 93.3Z" fill="#19D7FF"></path><path d="M300.8 113.7L300.4 108.8C297.5 112.4 293.3 114.5 287.6 114.5C274.9 114.5 266.1 105.5 266.1 93.9C266.1 81.3 275.4 72.4 287.7 72.4C297.6 72.4 306.1 78 307.9 87.6H297.4C295.6 82.9 291.6 81.6 287.9 81.6C281 81.6 276.2 86.5 276.2 93.6C276.2 100 280.8 105.1 288 105.1C292.7 105.1 296.3 102.8 298.2 98.9L286.6 98.8V90.9H308.3V113.6H300.8V113.7Z" fill="#19D7FF"></path><path d="M325.4 113.7H314.7L331.9 73H341.5L358.6 113.7H348L345.3 106.7H328.2L325.4 113.7ZM331.5 98.2H341.9L336.7 84.8L331.5 98.2Z" fill="#19D7FF"></path><path d="M380.2 113.7H370.1V82.2H357.2V73.2H393V82.2H380.2V113.7Z" fill="#19D7FF"></path><path d="M428.5 89.4V98H410.6V105H431.1V113.7H400.5V73.3H431.1V82H410.6V89.4H428.5Z" fill="#19D7FF"></path></svg>
+    <span>&copy; 2026 Floodgate &amp; Ann Miura-Ko</span>
+    <span class="spacer"></span>
+    <a href="mailto:ann@floodgate.com">ann@floodgate.com</a>
+  </footer>
+
+</div>
+</body>
+</html>
