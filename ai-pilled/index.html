@@ -650,7 +650,7 @@ function submitLead(ev){
 
   try{ var box=JSON.parse(localStorage.getItem('aipilled_leads')||"[]"); box.push(payload); localStorage.setItem('aipilled_leads',JSON.stringify(box)); }catch(e){}
   if(CONFIG.leadEndpoint){
-    try{ fetch(CONFIG.leadEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }catch(e){}
+    try{ fetch(CONFIG.leadEndpoint,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"payload="+encodeURIComponent(JSON.stringify(payload))}); }catch(e){}
   }
 
   state.unlocked=true;
