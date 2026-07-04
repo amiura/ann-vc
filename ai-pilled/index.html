@@ -714,15 +714,17 @@ function buildActionMarkdown(){
 
 _Generated from the AI-Pilled CxO diagnostic · Floodgate · ${dateStr}_
 
-> **How to use this file.** Hand it to whoever leads your AI transformation — or give it to an AI agent as its brief. It captures where your organization sits on the AI-Pilled maturity ladder today, and the highest-leverage moves to reach the next level. The reader's job: turn the *next moves* below into a concrete, sequenced plan — named owners, dates, lowest-hanging fruit first. To talk it through, contact Ann Miura-Ko · ann@floodgate.com.
+> **What this is.** A leader at your organization took the **AI-Pilled CxO diagnostic** and generated this brief. It places the organization on the AI-Pilled maturity ladder — a six-level (L0–L5) model of how deeply AI can *see, do, extend, and change* the real work — records their read of where you sit today, and lays out the highest-leverage moves to climb a level. Use it two ways: as a shared picture of the current state, and as a brief to hand your AI-transformation lead (or an AI agent) to turn the *next moves* below into a concrete, sequenced plan — named owners, dates, lowest-hanging fruit first. To talk it through: Ann Miura-Ko · ann@floodgate.com.
 
 ---
 
-## Where we are
+## The leader's assessment
+
+The leader who shared this took the diagnostic and placed the organization here:
 
 **Operating level: ${L.lv} — ${L.name}.** ${L.headline}
 
-**Your bottleneck: ${bindNames.join(" & ")}.** Your operating level is the lowest of the four primary dimensions; lifting any other dimension while this one stays low buys little. Focus the next quarter here.
+**Binding constraint: ${bindNames.join(" & ")}.** The operating level is the lowest of the four primary dimensions (See / Do / Extend / Change); lifting any other dimension while this one stays low buys little. Focus the next quarter here.
 
 ### Your read across the dimensions
 
@@ -731,25 +733,52 @@ _Generated from the AI-Pilled CxO diagnostic · Floodgate · ${dateStr}_
 ${table}
 
 *A → L0–L1 · B → L1–L2 · C → L2–L3 · D → L3–L4. Operating level = the lowest of the four primary dimensions (See / Do / Extend / Change); the cross-cutting reads (fluency, outcomes) act as ceilings.*
+
+> **One company, many levels.** Organizations rarely sit at a single level — different functions and business units routinely land a level or two apart (sales automating workflows at L2 while finance has crossed into directed autonomy at L3), and a group-level average hides exactly the read you need. This brief reflects one leader's view of the whole. **See where your own team or function lands — take the two-minute assessment for yourself at https://ann.vc/ai-pilled.**
 ${ceilBlock}${patBlock}
-## The maturity ladder (context for the reader)
+## The six levels of the AI-Pilled maturity ladder
 
-Floodgate's AI-Pilled model levels an organization L0–L5, read through four questions about the *real work* — not tools or adoption stats:
+The ladder isn't about *how much* AI you use — it's about how much of the real work AI can **see, do, extend, and change**, and how much of the decision loop the organization has handed over. It climbs on a single variable: which part of the **Observe → Decide → Act → Improve** loop the human still owns. Four questions read where a company sits on it:
 
-- **See** — is the work legible to a machine, or does it live in heads, DMs, and SaaS the agent can't read?
+- **See** — is the work legible to a machine, or trapped in heads, DMs, and SaaS the agent can't read?
 - **Do** — can agents act on systems of record (open PRs, update CRMs, reconcile invoices), or only summarize what a human wrote down?
 - **Extend** — are non-engineers shipping production tools, or is every workflow held together by a few power users?
 - **Change** — has the org actually reorganized, or is it running 2023's org chart with better autocomplete?
 
-- **L0 — AI as a Tool.** A personal convenience; turning it off tomorrow would change no process and no job.
-- **L1 — Individual Automation.** Individuals route real recurring work through AI; it's bounded to one person and dies with them.
-- **L2 — Team Automation.** A workflow becomes shared team property a second person can run; still inside team walls.
+**L0–L2 automate the *work*:** a human owns the whole loop and AI executes pieces of a workflow the human defined; only the *scope* widens — a person, then a team. **L3–L5 automate the *loop itself*:** the loop migrates from human to agent one handoff at a time.
 
-*Below this line the question changes — no longer how wide the automation reaches, but how much of the Observe → Decide → Act → Improve loop the human has handed over.*
+### L0 — AI as a Tool
+AI is in the building as a personal convenience, and nothing about the company has reorganized around it: someone opens a chat window, pastes something in, gets text back. The tell isn't low usage — it's that turning AI off tomorrow would change no process and no one's job.
+*See:* nothing structured; knowledge in heads, DMs, unreadable SaaS. *Do:* summarize what's pasted in. *Extend:* no one. *Change:* org chart, processes, and KPIs unchanged.
+**What keeps it off L1:** no recurring work runs through AI and gets captured so it persists.
 
-- **L3 — Directed Autonomy.** The company is legible and actionable; an agent acts across systems, but a human owns both ends of the loop (initiates the question, authorizes the result). Thrive-vs-stall here is decided by *compounding* — do wins propagate, or is the same tool rebuilt thirty-five times. *Example: Ramp/Glass — L3 with exceptional compounding; also Vercel d0.*
-- **L4 — Self-Directed Autonomy.** Initiation moves to the agent: it notices without being asked, forms a hypothesis, and brings a human a finding; the human authorizes the act. *Example: Roo — one governance decision from L5.*
-- **L5 — Self-Driving Enterprise.** The agent acts within delegated authority and closes the loop it opened; humans govern strategy, risk, and exceptions. *No company has reached it — the blocker is trust and governance, not capability.*
+### L1 — Individual Automation
+Individuals route real, recurring pieces of their *own* work through AI — accumulated prompts, scratch files, a private way of drafting or coding that genuinely speeds them up. It's real, but bounded to one person, sees only what they feed it, and dies with them. Value lives in individuals, not the organization.
+*See:* each person's private context only. *Do:* draft, summarize, code for one person; no action on systems of record. *Extend:* everyone reinvents alone; power users are heroes whose work walks out the door. *Change:* unchanged — maybe a Head of AI who buys tools.
+**What keeps it off L2:** nothing is inheritable — no workflow has survived being handed to a second person.
+
+### L2 — Team Automation
+A workflow becomes shared property of a team — a shared prompt library, function-specific integrations, and a second person who can run it without its author present. Efficiency now belongs to a *function* rather than a person, but it stays inside team walls, and every function quietly rebuilds its own stack.
+*See:* shared team context, within boundaries. *Do:* bounded functional workflows — prospecting, tier-1 triage, code review. *Extend:* inside the team by non-engineers; not across teams. *Change:* functional efficiency; roles and org chart intact.
+**What keeps it off L3:** workflows don't cross team lines, systems of record aren't agent-actionable org-wide, and the chart hasn't moved.
+
+> *Below this line the variable changes. It's no longer how **wide** the automation reaches, but how much of the Observe → Decide → Act → Improve loop the human has handed over.*
+
+### L3 — Directed Autonomy · *hands-off*
+The company itself becomes legible and actionable: systems of record are exposed so an agent *acts* across them, not just observes, and a human can point it at a cross-functional question and get an answer — or an action — back without convening a meeting. This is the first genuinely agentic level. But the human still owns **both ends** of the loop: a human initiates ("go figure this out") and a human authorizes the result. Whether you thrive or stall here is decided by **compounding** — whether wins get captured, propagated, and improved, or the same tool gets rebuilt thirty-five times.
+*See:* whole org queryable; systems of record agent-actionable via MCP / CLI / API. *Do:* acts across systems within bounds — updates CRMs, opens PRs, reconciles — human-initiated and approved. *Extend:* non-engineers author skills that move horizontally across functions. *Change:* chart materially different from 2023; a real structural choice is visible.
+**What keeps it off L4:** the agent doesn't initiate — it waits to be pointed. *Seen in the field: Vercel d0; Ramp / Glass as L3 with exceptional compounding.*
+
+### L4 — Self-Directed Autonomy · *eyes-off*
+Initiation moves to the agent. A standing system notices what deserves attention without being asked, synthesizes across sources, forms its own hypothesis, and brings a human a finding strong enough to force a decision — up to and including contradicting a strategy no one asked it to review. The human moves from the front of the loop to the back: you no longer point it at the question, you *authorize* the action it proposes.
+*See:* generative — it asks its own questions and runs its own investigations. *Do:* decides what's worth pursuing and prepares the act, then escalates it. *Extend:* non-engineers ship production tools; the system maintains its own context. *Change:* humans shift to authorization and exceptions; the highest-value work becomes deciding what surfaced.
+**What keeps it off L5:** it escalates rather than acts — authority to act still sits with a human. *Seen in the field: Roo, a clean L4, one governance decision from L5.*
+
+### L5 — Self-Driving Enterprise · *mind-off*
+The agent acts within delegated authority: it closes the loop it opened — notices, decides, acts — and humans step out of the routine cycle to govern strategy, taste, risk, and exceptions. **No company has reached it.** The blocker isn't capability — systems can already notice and decide — it's that no organization has handed a system the authority to *act* on what it noticed. The gap to L5 is a governance decision, not a technology one.
+*See:* frames questions no human posed. *Do:* acts within delegated authority on novel decisions, not just configured policies. *Extend:* the system reshapes the customer-facing product itself. *Change:* fluid — agents are members with real authority, and the org self-modifies.
+
+**The through-line — compounding.** Compounding isn't a rung; it's the engine of the whole climb. Efficiency is linear, but when every step of the loop gets faster and each turn feeds the next, learning starts to *compound* — and that curve, not the tools, is what separates the companies that pull away. It's why two organizations on the same level can be on completely different trajectories.
 
 Your operating level is the *lowest* of the four primary dimensions — that dimension is your bottleneck.
 
