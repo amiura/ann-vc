@@ -213,6 +213,14 @@ const essaysData = {
 
 // Load saved status from localStorage
 function loadSavedStatus() {
+  // Reset to defaults (v2 - July 2026)
+  const version = localStorage.getItem('aaron-essay-version');
+  if (version !== 'v2') {
+    localStorage.removeItem('aaron-essay-status');
+    localStorage.setItem('aaron-essay-version', 'v2');
+    return; // Use defaults
+  }
+
   const saved = localStorage.getItem('aaron-essay-status');
   if (saved) {
     const statuses = JSON.parse(saved);
