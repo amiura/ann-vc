@@ -1,0 +1,357 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Aaron — Essays</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--ink:#e7e9ee;--mut:#9aa3b2;--line:#262b36;
+--reach:#ef6f6f;--target:#e0b341;--likely:#5fb27a;--accent:#6ea8fe;--good:#3ecf8e;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 64px}
+nav{position:sticky;top:0;background:rgba(15,17,21,.92);backdrop-filter:blur(8px);
+border-bottom:1px solid var(--line);padding:14px 24px;display:flex;gap:8px;z-index:9}
+nav .brand{font-weight:700;margin-right:auto;letter-spacing:-.02em}
+nav a{color:var(--mut);text-decoration:none;padding:6px 14px;border-radius:8px;font-weight:600;font-size:14px}
+nav a.on{background:var(--accent);color:#0b1020}nav a:hover:not(.on){background:#1c212b;color:var(--ink)}
+h1{font-size:27px;margin:28px 0 6px;letter-spacing:-.02em}h1 .muted,.muted{color:var(--mut);font-weight:400}
+h2{font-size:18px;margin:26px 0 10px}
+.sub{color:var(--mut);margin:0 0 8px}
+.summary{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.sumtop{display:flex;justify-content:space-between;align-items:baseline}.sumpct{font-size:24px;font-weight:700;color:var(--good)}
+.sumbar{height:10px;background:#2a313d;border-radius:6px;overflow:hidden;margin-top:10px}
+.sumbar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .6s}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.chip{background:#1c212b;color:var(--mut);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.chip.on{background:var(--accent);color:#0b1020;border-color:var(--accent)}
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.ecard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow:hidden;transition:transform .15s,box-shadow .3s}
+.ecard:hover{transform:translateY(-2px)}
+.etag{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);font-weight:700}
+.eprompt{margin:6px 0 12px;font-size:14px;min-height:38px}
+.emeta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lim{color:var(--mut);font-size:12px}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.st-none .badge,.badge.st-none{background:#2a313d;color:var(--mut)}
+.st-draft .badge,.badge.st-draft{background:#3a3320;color:var(--target)}
+.st-review .badge,.badge.st-review{background:#1f3350;color:var(--accent)}
+.st-na .badge,.badge.st-na{background:#21262f;color:var(--mut)}
+.st-done .badge,.badge.st-done{background:#13402c;color:var(--good)}
+.ebar{height:6px;background:#2a313d;border-radius:4px;overflow:hidden;margin-top:12px}
+.ebar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .6s}
+.ribbon{position:absolute;top:12px;right:-34px;transform:rotate(45deg);background:var(--good);color:#062018;
+font-size:10px;font-weight:800;letter-spacing:.1em;padding:3px 40px;opacity:0;transition:opacity .3s}
+.check{position:absolute;top:12px;right:12px;width:0;height:0;opacity:0}
+.check circle{fill:none;stroke:var(--good);stroke-width:3;opacity:.35}
+.check path{fill:none;stroke:var(--good);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;
+stroke-dasharray:48;stroke-dashoffset:48;animation:draw .5s .15s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ecard.st-done{border-color:var(--good);box-shadow:0 0 0 1px var(--good),0 8px 26px -12px var(--good);cursor:pointer}
+.ecard.st-done .ribbon{opacity:1}.ecard.st-done .check{width:30px;height:30px;opacity:1}
+.ecard.st-done .eprompt{opacity:.85}
+/* auth modal */
+.auth-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center}
+.auth-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 40px;text-align:center;max-width:340px}
+.auth-box h2{margin:0 0 8px;font-size:20px}.auth-box p{color:var(--mut);margin:0 0 20px;font-size:14px}
+.auth-box input{width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:#1c212b;color:var(--ink);font-size:15px;margin-bottom:12px}
+.auth-box input:focus{outline:none;border-color:var(--accent)}
+.auth-box button{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#0b1020;font-weight:700;font-size:15px;cursor:pointer}
+.auth-box button:hover{opacity:.9}
+.auth-box .error{color:var(--reach);font-size:13px;margin-top:8px;display:none}
+.content-hidden{display:none}
+</style></head><body>
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-box">
+    <h2>Private</h2>
+    <p>Enter password to continue</p>
+    <form id="auth-form">
+      <input type="password" id="auth-pass" placeholder="Password" autocomplete="off" autofocus>
+      <button type="submit">Enter</button>
+      <p class="error" id="auth-error">Incorrect password</p>
+    </form>
+  </div>
+</div>
+<div id="main-content" class="content-hidden">
+<nav><span class="brand">Aaron · College</span><a href="index.html" class="">Dashboard</a><a href="weekly.html" class="">Weekly</a><a href="essays.html" class="on">Essays</a></nav>
+<div class="wrap"><h1>Essays <span class="muted">— where we are</span></h1><div class="summary">
+  <div class="sumtop"><span><b>0</b> of <b>28</b> essays complete</span><span class="sumpct">0%</span></div>
+  <div class="sumbar"><span style="width:0%"></span></div>
+</div><div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="Common App (all)">Common App (all)</button><button class="chip" data-f="Yale">Yale</button><button class="chip" data-f="Boston College">Boston College</button><button class="chip" data-f="UC System">UC System</button><button class="chip" data-f="University of Wisconsin">University of Wisconsin</button><button class="chip" data-f="University of Florida">University of Florida</button><button class="chip" data-f="Santa Clara">Santa Clara</button><button class="chip" data-f="BYU">BYU</button><button class="chip" data-f="Northeastern">Northeastern</button><button class="chip" data-f="George Washington">George Washington</button><button class="chip" data-f="Lehigh">Lehigh</button><button class="chip" data-f="University of Washington">University of Washington</button><button class="chip" data-f="Villanova">Villanova</button><button class="chip" data-f="Boston University">Boston University</button></div><div class="egrid"><div class="ecard st-draft" data-college="Common App (all)">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Common App (all)</div>
+  <div class="eprompt">Personal statement — "farmers market" (Prompt 1)</div>
+  <div class="emeta"><span class="badge st-draft">Drafting</span>
+    <span class="lim">612 / 650 w</span></div>
+  <div class="ebar"><span style="width:94%"></span></div>
+</div><div class="ecard st-draft" data-college="Yale">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Yale</div>
+  <div class="eprompt">Academic-interest essay (topic that excites you)</div>
+  <div class="emeta"><span class="badge st-draft">Drafting</span>
+    <span class="lim">177 / 200 w</span></div>
+  <div class="ebar"><span style="width:88%"></span></div>
+</div><div class="ecard st-none" data-college="Yale">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Yale</div>
+  <div class="eprompt">Short take #1 — teach a course / write a book / create art</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">200 ch</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-draft" data-college="Yale">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Yale</div>
+  <div class="eprompt">Short take #2 — grow/develop in college</div>
+  <div class="emeta"><span class="badge st-draft">Drafting</span>
+    <span class="lim">198 / 200 ch</span></div>
+  <div class="ebar"><span style="width:99%"></span></div>
+</div><div class="ecard st-draft" data-college="Yale">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Yale</div>
+  <div class="eprompt">Short take #3 — not elsewhere in the app</div>
+  <div class="emeta"><span class="badge st-draft">Drafting</span>
+    <span class="lim">135 / 200 ch</span></div>
+  <div class="ebar"><span style="width:68%"></span></div>
+</div><div class="ecard st-draft" data-college="Yale">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Yale</div>
+  <div class="eprompt">Community essay — "Roberto / Voces Vivas"</div>
+  <div class="emeta"><span class="badge st-draft">Drafting</span>
+    <span class="lim">391 / 400 w</span></div>
+  <div class="ebar"><span style="width:98%"></span></div>
+</div><div class="ecard st-none" data-college="Boston College">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Boston College</div>
+  <div class="eprompt">Supplement — choose 1 of 4 (Traditions / Conversation Partner / Single Story / Fourth Be)</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">400 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="UC System">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">UC System</div>
+  <div class="eprompt">Personal Insight Question #1</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">350 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="UC System">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">UC System</div>
+  <div class="eprompt">Personal Insight Question #2</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">350 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="UC System">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">UC System</div>
+  <div class="eprompt">Personal Insight Question #3</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">350 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="UC System">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">UC System</div>
+  <div class="eprompt">Personal Insight Question #4</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">350 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="University of Wisconsin">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">University of Wisconsin</div>
+  <div class="eprompt">Essay 1 — background/experiences</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">650 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="University of Wisconsin">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">University of Wisconsin</div>
+  <div class="eprompt">Essay 2 — "Why UW / why major"</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">650 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="University of Florida">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">University of Florida</div>
+  <div class="eprompt">Most meaningful out-of-class commitment</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">250 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="University of Florida">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">University of Florida</div>
+  <div class="eprompt">Honors essay (optional, by Nov 1)</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">~400 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="Santa Clara">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Santa Clara</div>
+  <div class="eprompt">Essay 1 — people/places/events that shaped you</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">300 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="Santa Clara">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Santa Clara</div>
+  <div class="eprompt">Essay 2 — an ethical dilemma you care about</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">300 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="Santa Clara">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Santa Clara</div>
+  <div class="eprompt">Why this major/division</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">50 w</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="BYU">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">BYU</div>
+  <div class="eprompt">Essay 1 — topic you lose track of time in</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">1500 ch</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="BYU">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">BYU</div>
+  <div class="eprompt">Essay 2 — significant needs in family/school/community</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">1500 ch</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="BYU">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">BYU</div>
+  <div class="eprompt">Essay 3 — efforts fell short + recovery</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">2000 ch</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="BYU">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">BYU</div>
+  <div class="eprompt">Essay 4 — your story / contribution</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">1500 ch</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="BYU">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">BYU</div>
+  <div class="eprompt">Essay 5 — spiritually strengthening education</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">1500 ch</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-na" data-college="Northeastern">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Northeastern</div>
+  <div class="eprompt">No supplement — Common App essay only</div>
+  <div class="emeta"><span class="badge st-na">N/A</span>
+    <span class="lim">—</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="George Washington">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">George Washington</div>
+  <div class="eprompt">Supplement — prompts TBD (collect when app opens)</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">TBD</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="Lehigh">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Lehigh</div>
+  <div class="eprompt">Supplement — prompts TBD</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">TBD</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="University of Washington">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">University of Washington</div>
+  <div class="eprompt">Essay(s) — own application, TBD</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">TBD</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="Villanova">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Villanova</div>
+  <div class="eprompt">Supplement — prompts TBD</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">TBD</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div><div class="ecard st-none" data-college="Boston University">
+  <div class="ribbon">DONE</div>
+  <svg class="check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+  <div class="etag">Boston University</div>
+  <div class="eprompt">Supplement — prompts TBD</div>
+  <div class="emeta"><span class="badge st-none">Not started</span>
+    <span class="lim">TBD</span></div>
+  <div class="ebar"><span style="width:0%"></span></div>
+</div></div></div>
+</div>
+<canvas id="cfx" style="position:fixed;inset:0;pointer-events:none;z-index:99"></canvas>
+<script>
+// Password auth
+const AUTH_HASH = '346ecd6ee37bc648468530e4eb4a839f7edbc7a6209b717a517061f785b37b15';
+async function hashPass(pass) {
+    const data = new TextEncoder().encode(pass);
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function unlock() {
+    document.getElementById('auth-overlay').style.display = 'none';
+    document.getElementById('main-content').classList.remove('content-hidden');
+}
+if (sessionStorage.getItem('aaron-auth') === 'true') { unlock(); }
+document.getElementById('auth-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pass = document.getElementById('auth-pass').value;
+    const hash = await hashPass(pass);
+    if (hash === AUTH_HASH) {
+        sessionStorage.setItem('aaron-auth', 'true');
+        unlock();
+    } else {
+        document.getElementById('auth-error').style.display = 'block';
+    }
+});
+
+// confetti + filters
+const cv=document.getElementById('cfx'),cx=cv.getContext('2d');let P=[];
+function size(){cv.width=innerWidth;cv.height=innerHeight}addEventListener('resize',size);size();
+const COL=['#6ea8fe','#3ecf8e','#e0b341','#ef6f6f','#fff'];
+function burst(x,y,n){for(let i=0;i<n;i++){P.push({x,y,vx:(Math.random()-.5)*9,vy:Math.random()*-9-3,
+g:.28,s:Math.random()*5+3,c:COL[i%COL.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:90})}}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.life-->0);
+for(const p of P){p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);
+cx.fillStyle=p.c;cx.globalAlpha=Math.max(0,p.life/90);cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore()}
+if(P.length)requestAnimationFrame(tick)}
+function celebrate(x,y){burst(x,y,40);requestAnimationFrame(tick)}
+const chips=document.querySelectorAll('.chip');
+chips.forEach(c=>c.onclick=()=>{chips.forEach(x=>x.classList.remove('on'));c.classList.add('on');
+const f=c.dataset.f;document.querySelectorAll('.ecard').forEach(e=>{
+e.style.display=(f==='all'||e.dataset.college===f)?'':'none'})});
+const done=document.querySelectorAll('.ecard.st-done');
+done.forEach(e=>e.onclick=()=>{const r=e.getBoundingClientRect();celebrate(r.left+r.width/2,r.top+r.height/2)});
+if(done.length){setTimeout(()=>{celebrate(innerWidth/2,innerHeight*.3);
+if(done.length>=document.querySelectorAll('.ecard').length-1){
+setTimeout(()=>celebrate(innerWidth*.25,innerHeight*.4),250);
+setTimeout(()=>celebrate(innerWidth*.75,innerHeight*.4),450);}},400)}
+</script></body></html>

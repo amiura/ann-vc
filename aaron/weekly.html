@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Aaron — Weekly</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--ink:#e7e9ee;--mut:#9aa3b2;--line:#262b36;
+--reach:#ef6f6f;--target:#e0b341;--likely:#5fb27a;--accent:#6ea8fe;--good:#3ecf8e;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 64px}
+nav{position:sticky;top:0;background:rgba(15,17,21,.92);backdrop-filter:blur(8px);
+border-bottom:1px solid var(--line);padding:14px 24px;display:flex;gap:8px;z-index:9}
+nav .brand{font-weight:700;margin-right:auto;letter-spacing:-.02em}
+nav a{color:var(--mut);text-decoration:none;padding:6px 14px;border-radius:8px;font-weight:600;font-size:14px}
+nav a.on{background:var(--accent);color:#0b1020}nav a:hover:not(.on){background:#1c212b;color:var(--ink)}
+h1{font-size:27px;margin:28px 0 6px;letter-spacing:-.02em}h1 .muted,.muted{color:var(--mut);font-weight:400}
+h2{font-size:18px;margin:26px 0 10px}h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.sub{color:var(--mut);margin:0 0 8px}
+.scroll{overflow-x:auto}
+table.grid{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border-radius:10px;overflow:hidden;margin:8px 0}
+.grid th{text-align:left;padding:9px 10px;background:#1c212b;color:var(--mut);border-bottom:1px solid var(--line)}
+.grid td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.grid tr:last-child td{border-bottom:0}.grid tbody tr:hover{background:#1b2029}
+.dates .dt{color:var(--mut);white-space:nowrap;width:160px}.dates tr.soon .dt{color:var(--accent);font-weight:700}
+.dates tr.soon{background:#172033}
+.verify{color:var(--target);font-size:11px}.ok{color:var(--good)}.warn{color:var(--target)}
+.block{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:14px 0}
+.block h2{margin:0 0 8px;font-size:15px}.block.alert{border-color:#5a2d2d;background:#1f1517}
+.block.good{border-color:#28402f}.list{margin:4px 0 0;padding-left:20px}.list li{margin:4px 0}
+.empty{color:var(--mut);margin:2px 0}
+/* auth modal */
+.auth-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center}
+.auth-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 40px;text-align:center;max-width:340px}
+.auth-box h2{margin:0 0 8px;font-size:20px}.auth-box p{color:var(--mut);margin:0 0 20px;font-size:14px}
+.auth-box input{width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:#1c212b;color:var(--ink);font-size:15px;margin-bottom:12px}
+.auth-box input:focus{outline:none;border-color:var(--accent)}
+.auth-box button{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#0b1020;font-weight:700;font-size:15px;cursor:pointer}
+.auth-box button:hover{opacity:.9}
+.auth-box .error{color:var(--reach);font-size:13px;margin-top:8px;display:none}
+.content-hidden{display:none}
+</style></head><body>
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-box">
+    <h2>Private</h2>
+    <p>Enter password to continue</p>
+    <form id="auth-form">
+      <input type="password" id="auth-pass" placeholder="Password" autocomplete="off" autofocus>
+      <button type="submit">Enter</button>
+      <p class="error" id="auth-error">Incorrect password</p>
+    </form>
+  </div>
+</div>
+<div id="main-content" class="content-hidden">
+<nav><span class="brand">Aaron · College</span><a href="index.html" class="">Dashboard</a><a href="weekly.html" class="on">Weekly</a><a href="essays.html" class="">Essays</a></nav>
+<div class="wrap"><h1>Weekly synopsis</h1><p class="sub">Generated 2026-06-28 · essays 0/28 complete</p><div class="block "><h2>✅ Done</h2><ul class="list"><li>Save existing essay drafts — Common App personal statement (612/650 <span class="ok">✓</span>) + Yale supplement saved 2026-06-28</li></ul></div><div class="block "><h2>📌 This week</h2><ul class="list"><li><strong>Decide BC: Carroll (business) vs Morrissey (IR/politics)</strong> — choice is hard to reverse (Carroll internal transfer is lottery-capped ≤10/yr)</li><li><strong>Confirm with BC</strong> whether RD/ED2 applicants are still considered for Gabelli Presidential Scholars (auto-consideration is tied to Nov 1)</li><li><strong>Decide UW–Madison: Business direct-admit vs L&amp;S Honors</strong> (mutually exclusive)</li><li><strong>Get Aaron on Santa Clara&#x27;s mailing list + to an event</strong> — DI is &quot;Important&quot; there</li><li>Start BYU ecclesiastical endorsement (bishop + stake president)</li><li>Get AP Macro score (expected ~Jul 6) → share with Katy Murphy when released</li><li>Fill the Honors section in <code>activities-list.md</code> (blank in the sheet)</li><li>Draft Yale short take #1 (teach a course / write a book / create art) — still blank</li><li>Fill remaining deadlines: Lehigh, BU, Villanova (scaffold pages)</li></ul></div><div class="block "><h2>✍️ Essays in progress</h2><ul class="list"><li>Common App (all) — Personal statement — &amp;quot;farmers market&amp;quot; (Prompt 1) (612/650 w)</li><li>Yale — Academic-interest essay (topic that excites you) (177/200 w)</li><li>Yale — Short take #2 — grow/develop in college (198/200 ch)</li><li>Yale — Short take #3 — not elsewhere in the app (135/200 ch)</li><li>Yale — Community essay — &amp;quot;Roberto / Voces Vivas&amp;quot; (391/400 w)</li></ul></div><div class="block good"><h2>🚩 Behind / at risk</h2><p class="empty">On track — nothing inside 45 days unstarted.</p></div><div class="block "><h2>⏰ Next up</h2><table class="grid dates"><tbody><tr class=""><td class="dt">Aug 1, 2026</td><td>Common App opens — collect supplement prompts</td></tr><tr class=""><td class="dt">August 2026</td><td>College Launch Part 2 — lock final list</td></tr><tr class=""><td class="dt">Sep 2026</td><td>ACT sitting #1</td></tr><tr class=""><td class="dt">Oct 1 – Nov 30, 2026</td><td>UC application filing window (apply in Nov)</td></tr><tr class=""><td class="dt">Oct 15, 2026</td><td><strong>UF binding Early Decision</strong> (if used)</td></tr><tr class=""><td class="dt">Oct 2026</td><td>ACT sitting #2</td></tr></tbody></table></div></div>
+</div>
+<script>
+// Password auth
+const AUTH_HASH = '346ecd6ee37bc648468530e4eb4a839f7edbc7a6209b717a517061f785b37b15';
+async function hashPass(pass) {
+    const data = new TextEncoder().encode(pass);
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function unlock() {
+    document.getElementById('auth-overlay').style.display = 'none';
+    document.getElementById('main-content').classList.remove('content-hidden');
+}
+if (sessionStorage.getItem('aaron-auth') === 'true') { unlock(); }
+document.getElementById('auth-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pass = document.getElementById('auth-pass').value;
+    const hash = await hashPass(pass);
+    if (hash === AUTH_HASH) {
+        sessionStorage.setItem('aaron-auth', 'true');
+        unlock();
+    } else {
+        document.getElementById('auth-error').style.display = 'block';
+    }
+});
+</script></body></html>
