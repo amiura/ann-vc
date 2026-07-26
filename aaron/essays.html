@@ -20,26 +20,31 @@ h2{font-size:18px;margin:26px 0 10px}
 .sumtop{display:flex;justify-content:space-between;align-items:baseline}.sumpct{font-size:24px;font-weight:700;color:var(--good)}
 .sumbar{height:10px;background:#2a313d;border-radius:6px;overflow:hidden;margin-top:10px}
 .sumbar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .6s}
-.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
-.scard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;cursor:pointer;transition:transform .15s,box-shadow .3s,border-color .3s}
+.doc-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#0b1020;border:none;
+border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;margin:16px 0}
+.doc-btn:hover{opacity:.9}
+.doc-btn svg{width:18px;height:18px}
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-top:20px}
+.scard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;transition:transform .15s,box-shadow .3s,border-color .3s}
 .scard:hover{transform:translateY(-2px);border-color:var(--accent)}
-.scard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.scard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .scard-name{font-size:16px;font-weight:700;color:var(--ink)}
 .scard-deadline{font-size:12px;color:var(--mut)}
 .scard-essays{margin:0;padding:0;list-style:none}
-.scard-essays li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:13px}
+.scard-essays li{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:13px;gap:8px}
 .scard-essays li:first-child{border-top:none;padding-top:0}
-.eprompt{color:var(--ink);flex:1;margin-right:10px}
-.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap}
+.eprompt{color:var(--ink);flex:1;min-width:0}
+.badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
 .badge:hover{opacity:.8}
 .badge.st-none{background:#2a313d;color:var(--mut)}
 .badge.st-drafting{background:#3a3320;color:var(--target)}
 .badge.st-finished{background:#13402c;color:var(--good)}
 .badge.st-na{background:#21262f;color:var(--mut);cursor:default}
-.scard-footer{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.doc-link{font-size:12px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:4px}
-.doc-link:hover{text-decoration:underline}
+.scard-footer{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .scard-status{font-size:11px;color:var(--mut)}
+.last-edit{font-size:11px;color:var(--mut);display:flex;align-items:center;gap:4px}
+.last-edit input{background:transparent;border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--ink);font-size:11px;width:90px}
+.last-edit input:focus{outline:none;border-color:var(--accent)}
 /* auth modal */
 .auth-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center}
 .auth-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 40px;text-align:center;max-width:340px}
@@ -50,6 +55,8 @@ h2{font-size:18px;margin:26px 0 10px}
 .auth-box button:hover{opacity:.9}
 .auth-box .error{color:var(--reach);font-size:13px;margin-top:8px;display:none}
 .content-hidden{display:none}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;font-size:12px;color:var(--mut)}
+.legend-item{display:flex;align-items:center;gap:6px}
 </style></head><body>
 <div class="auth-overlay" id="auth-overlay">
   <div class="auth-box">
@@ -70,11 +77,22 @@ h2{font-size:18px;margin:26px 0 10px}
     <div class="sumtop"><span><b id="done-count">0</b> of <b id="total-count">0</b> essays complete</span><span class="sumpct" id="pct">0%</span></div>
     <div class="sumbar"><span id="pct-bar" style="width:0%"></span></div>
   </div>
-  <p class="sub">Click a card to open the Google Doc. Click status badges to toggle: Not started → Drafting → Finished</p>
+
+  <a href="https://docs.google.com/document/d/171cgibwz1reqzH23iTpDQInRl2MOO6BkmXz8MKowpJ0/edit" target="_blank" class="doc-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Open Master Essay Doc
+  </a>
+
+  <div class="legend">
+    <div class="legend-item"><span class="badge st-none">Not started</span> No content yet</div>
+    <div class="legend-item"><span class="badge st-drafting">Drafting</span> In progress</div>
+    <div class="legend-item"><span class="badge st-finished">Done</span> Ready to submit</div>
+  </div>
+  <p class="sub">Click status badges to update. Track last edit dates per school.</p>
+
   <div class="egrid" id="essays-grid"></div>
 </div>
 </div>
-<canvas id="cfx" style="position:fixed;inset:0;pointer-events:none;z-index:99"></canvas>
 <script>
 // Password auth
 const AUTH_HASH = '346ecd6ee37bc648468530e4eb4a839f7edbc7a6209b717a517061f785b37b15';
@@ -100,160 +118,175 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
     }
 });
 
-// Essay data with Google Doc URLs
+// Essay data - all link to same master doc
+const MASTER_DOC = "https://docs.google.com/document/d/171cgibwz1reqzH23iTpDQInRl2MOO6BkmXz8MKowpJ0/edit";
+
 const essaysData = {
   "Common App": {
     deadline: "All schools",
-    googleDocUrl: "https://docs.google.com/document/d/1n6y2yMlG4TCAtnvObBuO3J9jMrlWV0DQuHEI5lFdHfs/edit",
+    section: "Personal Statement",
+    lastEdited: "",
     essays: [
       { id: "common-ps", prompt: "Personal statement (650 words)", status: "drafting" }
     ]
   },
   "Yale": {
     deadline: "Nov 1 (REA)",
-    googleDocUrl: "https://docs.google.com/document/d/171cgibwz1reqzH23iTpDQInRl2MOO6BkmXz8MKowpJ0/edit",
+    section: "Yale Supplemental",
+    lastEdited: "",
     essays: [
       { id: "yale-academic", prompt: "Academic interest essay (200 words)", status: "drafting" },
-      { id: "yale-st1", prompt: "Short take #1 — teach/write/create (200 chars)", status: "none" },
-      { id: "yale-st2", prompt: "Short take #2 — grow in college (200 chars)", status: "drafting" },
-      { id: "yale-st3", prompt: "Short take #3 — not elsewhere (200 chars)", status: "drafting" },
+      { id: "yale-st1", prompt: "Short take #1 — teach/write/create", status: "drafting" },
+      { id: "yale-st2", prompt: "Short take #2 — grow in college", status: "drafting" },
+      { id: "yale-st3", prompt: "Short take #3 — not elsewhere", status: "drafting" },
       { id: "yale-community", prompt: "Community essay (400 words)", status: "drafting" }
-    ]
-  },
-  "Boston College": {
-    deadline: "Jan 2 (ED2/RD)",
-    googleDocUrl: "https://docs.google.com/document/d/1S5uoHf1v_CKpt5uznqLRq78l_jjVuc77zzvZkzZ0rxM/edit",
-    essays: [
-      { id: "bc-supp", prompt: "Supplement — choose 1 of 4 (400 words)", status: "none" }
     ]
   },
   "UC System": {
     deadline: "Nov 30",
-    googleDocUrl: "https://docs.google.com/document/d/1ILyxDu5hh2bmQV5TUG-qjdq-UALkxk47YRSBaMdosjg/edit",
+    section: "UC application",
+    lastEdited: "",
     essays: [
-      { id: "uc-piq1", prompt: "Personal Insight Question #1 (350 words)", status: "none" },
-      { id: "uc-piq2", prompt: "Personal Insight Question #2 (350 words)", status: "none" },
-      { id: "uc-piq3", prompt: "Personal Insight Question #3 (350 words)", status: "none" },
-      { id: "uc-piq4", prompt: "Personal Insight Question #4 (350 words)", status: "none" }
+      { id: "uc-piq1", prompt: "PIQ #1 — Leadership", status: "none" },
+      { id: "uc-piq5", prompt: "PIQ #5 — Significant Challenge", status: "none" },
+      { id: "uc-piq6", prompt: "PIQ #6 — Academic Subject", status: "drafting" },
+      { id: "uc-piq8", prompt: "PIQ #8 — What Sets You Apart", status: "none" }
     ]
   },
   "University of Wisconsin-Madison": {
     deadline: "Nov 1 (EA)",
-    googleDocUrl: "https://docs.google.com/document/d/1JYoJsh0Km-TisRNB3xKfROHoKyF4cyI2BSZCgWod-I0/edit",
+    section: "University of Wisconsin",
+    lastEdited: "",
     essays: [
-      { id: "wisc-e1", prompt: "Essay 1 — background/experiences (650 words)", status: "none" },
-      { id: "wisc-e2", prompt: "Essay 2 — Why UW / Why major (650 words)", status: "none" }
+      { id: "wisc-why", prompt: "Why UW / Why major (650 words)", status: "none" },
+      { id: "wisc-personal", prompt: "Personal essay (650 words)", status: "none" }
     ]
   },
   "University of Florida": {
     deadline: "Nov 1 (EA)",
-    googleDocUrl: "https://docs.google.com/document/d/1HwV6pOrjIEF1NvtdoHoCmsMs-GFmvpHjrqSw2S4dwtk/edit",
+    section: "University of Florida",
+    lastEdited: "",
     essays: [
-      { id: "uf-commitment", prompt: "Most meaningful commitment (250 words)", status: "none" },
-      { id: "uf-honors", prompt: "Honors essay (optional, ~400 words)", status: "none" }
-    ]
-  },
-  "Santa Clara": {
-    deadline: "Jan 7 (RD)",
-    googleDocUrl: "https://docs.google.com/document/d/1vylEVCsJiFeceQ0vgTi-j5PnuTed9ltZrhe_agJg8iQ/edit",
-    essays: [
-      { id: "scu-e1", prompt: "Essay 1 — people/places/events (300 words)", status: "none" },
-      { id: "scu-e2", prompt: "Essay 2 — ethical dilemma (300 words)", status: "none" },
-      { id: "scu-why", prompt: "Why this major (50 words)", status: "none" }
+      { id: "uf-commitment", prompt: "Most meaningful commitment (250 words)", status: "none" }
     ]
   },
   "BYU": {
-    deadline: "Nov 1 (Priority — OK w/ Yale REA)",
-    googleDocUrl: "https://docs.google.com/document/d/15tgrNwyRDPHsdnK83yuf9IecntgfB5y640ErLxjvfNY/edit",
+    deadline: "Nov 1 (Priority)",
+    section: "BYU",
+    lastEdited: "",
     essays: [
-      { id: "byu-e1", prompt: "Essay 1 — lose track of time (1500 chars)", status: "none" },
-      { id: "byu-e2", prompt: "Essay 2 — community needs (1500 chars)", status: "none" },
-      { id: "byu-e3", prompt: "Essay 3 — efforts fell short (2000 chars)", status: "none" },
-      { id: "byu-e4", prompt: "Essay 4 — your story (1500 chars)", status: "none" },
-      { id: "byu-e5", prompt: "Essay 5 — spiritually strengthening (1500 chars)", status: "none" }
+      { id: "byu-e1", prompt: "Lose track of time (1500 chars)", status: "none" },
+      { id: "byu-e2", prompt: "Community needs (1500 chars)", status: "none" },
+      { id: "byu-e3", prompt: "Efforts fell short (2000 chars)", status: "none" },
+      { id: "byu-e4", prompt: "Your story (1500 chars)", status: "none" },
+      { id: "byu-e5", prompt: "Spiritually strengthening (1500 chars)", status: "none" }
     ]
   },
   "Northeastern": {
     deadline: "Jan 1 (RD)",
-    googleDocUrl: null,
+    section: null,
+    lastEdited: "",
     essays: [
       { id: "neu-none", prompt: "No supplement required", status: "na" }
     ]
   },
+  "Boston College": {
+    deadline: "Jan 2 (ED2/RD)",
+    section: "Boston College",
+    lastEdited: "",
+    essays: [
+      { id: "bc-supp", prompt: "Choose 1 of 4 prompts (400 words)", status: "none" }
+    ]
+  },
   "George Washington": {
     deadline: "Jan 5 (RD)",
-    googleDocUrl: "https://docs.google.com/document/d/1JYTlT-NYSY-VNbg1Mx9YZxCZ_YxuMa8e_E_ufvaM72w/edit",
+    section: "George Washington",
+    lastEdited: "",
     essays: [
-      { id: "gw-supp", prompt: "Supplement — prompts TBD (Aug 1)", status: "none" }
+      { id: "gw-supp", prompt: "Supplement — prompts TBD", status: "none" }
     ]
   },
-  "Lehigh": {
-    deadline: "Jan 1 (RD)",
-    googleDocUrl: "https://docs.google.com/document/d/102IER0kskd2xxBXQ3xovltBWT4N131EE7cTpkiFvggk/edit",
+  "Santa Clara": {
+    deadline: "Jan 7 (RD)",
+    section: "Santa Clara",
+    lastEdited: "",
     essays: [
-      { id: "lehigh-why", prompt: "Why Lehigh (~200 words)", status: "none" },
-      { id: "lehigh-celebrate", prompt: "Personal celebration (~200 words)", status: "none" }
-    ]
-  },
-  "University of Washington": {
-    deadline: "Nov 15 (RD)",
-    googleDocUrl: "https://docs.google.com/document/d/1hZVsqHRgXzTekkr42l-EmFAdFBQ76Yi9uXiJnq0jLEU/edit",
-    essays: [
-      { id: "uw-essays", prompt: "Essays — own application, TBD", status: "none" }
+      { id: "scu-e1", prompt: "People/places/events (300 words)", status: "none" },
+      { id: "scu-e2", prompt: "Ethical dilemma (300 words)", status: "none" },
+      { id: "scu-why", prompt: "Why this major (50 words)", status: "none" }
     ]
   },
   "Villanova": {
     deadline: "Jan 15 (RD)",
-    googleDocUrl: "https://docs.google.com/document/d/1WVEa9c_YngqufIOUicjM5FrUsKcm_HR9nkYiJV1IUNI/edit",
+    section: "Villanova",
+    lastEdited: "",
     essays: [
-      { id: "nova-supp", prompt: "Supplement — choose 1 of 5 (~250 words)", status: "none" }
+      { id: "nova-supp", prompt: "Choose 1 of 5 prompts (~250 words)", status: "none" }
+    ]
+  },
+  "University of Washington": {
+    deadline: "Nov 15 (RD)",
+    section: "University of Washington",
+    lastEdited: "",
+    essays: [
+      { id: "uw-essays", prompt: "Essays — own application, TBD", status: "none" }
+    ]
+  },
+  "Lehigh": {
+    deadline: "Jan 1 (RD)",
+    section: "Lehigh",
+    lastEdited: "",
+    essays: [
+      { id: "lehigh-why", prompt: "Why Lehigh (~200 words)", status: "none" },
+      { id: "lehigh-celebrate", prompt: "Personal celebration (~200 words)", status: "none" }
     ]
   }
 };
 
-// Load saved status from localStorage
-function loadSavedStatus() {
-  // Reset to defaults (v2 - July 2026)
-  const version = localStorage.getItem('aaron-essay-version');
-  if (version !== 'v2') {
-    localStorage.removeItem('aaron-essay-status');
-    localStorage.setItem('aaron-essay-version', 'v2');
-    return; // Use defaults
-  }
-
-  const saved = localStorage.getItem('aaron-essay-status');
+// Load saved data from localStorage
+function loadSavedData() {
+  const saved = localStorage.getItem('aaron-essay-data-v3');
   if (saved) {
-    const statuses = JSON.parse(saved);
+    const data = JSON.parse(saved);
     for (const school in essaysData) {
-      for (const essay of essaysData[school].essays) {
-        if (statuses[essay.id]) {
-          essay.status = statuses[essay.id];
+      if (data[school]) {
+        if (data[school].lastEdited) {
+          essaysData[school].lastEdited = data[school].lastEdited;
+        }
+        for (const essay of essaysData[school].essays) {
+          if (data[school].essays && data[school].essays[essay.id]) {
+            essay.status = data[school].essays[essay.id];
+          }
         }
       }
     }
   }
 }
 
-// Save status to localStorage
-function saveStatus() {
-  const statuses = {};
+// Save data to localStorage
+function saveData() {
+  const data = {};
   for (const school in essaysData) {
+    data[school] = {
+      lastEdited: essaysData[school].lastEdited,
+      essays: {}
+    };
     for (const essay of essaysData[school].essays) {
-      statuses[essay.id] = essay.status;
+      data[school].essays[essay.id] = essay.status;
     }
   }
-  localStorage.setItem('aaron-essay-status', JSON.stringify(statuses));
+  localStorage.setItem('aaron-essay-data-v3', JSON.stringify(data));
 }
 
-// Cycle status: none → drafting → finished → drafting
+// Cycle status
 function cycleStatus(essayId) {
   for (const school in essaysData) {
     for (const essay of essaysData[school].essays) {
       if (essay.id === essayId && essay.status !== 'na') {
         if (essay.status === 'none') essay.status = 'drafting';
         else if (essay.status === 'drafting') essay.status = 'finished';
-        else if (essay.status === 'finished') essay.status = 'drafting';
-        saveStatus();
+        else if (essay.status === 'finished') essay.status = 'none';
+        saveData();
         renderCards();
         return;
       }
@@ -261,9 +294,15 @@ function cycleStatus(essayId) {
   }
 }
 
+// Update last edited
+function updateLastEdited(school, value) {
+  essaysData[school].lastEdited = value;
+  saveData();
+}
+
 // Get badge HTML
 function getBadgeHtml(status, essayId) {
-  const labels = { none: 'Not started', drafting: 'Drafting', finished: 'Finished', na: 'N/A' };
+  const labels = { none: 'Not started', drafting: 'Drafting', finished: 'Done', na: 'N/A' };
   const classes = { none: 'st-none', drafting: 'st-drafting', finished: 'st-finished', na: 'st-na' };
   return `<span class="badge ${classes[status]}" data-essay="${essayId}">${labels[status]}</span>`;
 }
@@ -297,24 +336,44 @@ function renderCards() {
   const grid = document.getElementById('essays-grid');
   grid.innerHTML = '';
 
-  for (const school in essaysData) {
+  // Sort by deadline
+  const schoolOrder = Object.keys(essaysData).sort((a, b) => {
+    const deadlines = {
+      'Nov 1': 1, 'Nov 15': 2, 'Nov 30': 3,
+      'Jan 1': 4, 'Jan 2': 5, 'Jan 5': 6, 'Jan 7': 7, 'Jan 15': 8,
+      'All schools': 0
+    };
+    const getOrder = (s) => {
+      const d = essaysData[s].deadline;
+      for (const key in deadlines) {
+        if (d.includes(key)) return deadlines[key];
+      }
+      return 99;
+    };
+    return getOrder(a) - getOrder(b);
+  });
+
+  for (const school of schoolOrder) {
     const data = essaysData[school];
     const card = document.createElement('div');
     card.className = 'scard';
 
-    // Count status for this school
     const schoolEssays = data.essays.filter(e => e.status !== 'na');
     const finishedCount = schoolEssays.filter(e => e.status === 'finished').length;
     const draftingCount = schoolEssays.filter(e => e.status === 'drafting').length;
+    const noneCount = schoolEssays.filter(e => e.status === 'none').length;
 
     let statusText = '';
     if (schoolEssays.length === 0) {
       statusText = 'No essays required';
     } else if (finishedCount === schoolEssays.length) {
-      statusText = 'All complete!';
+      statusText = '✓ All complete';
     } else {
-      statusText = `${finishedCount}/${schoolEssays.length} complete`;
-      if (draftingCount > 0) statusText += ` · ${draftingCount} drafting`;
+      const parts = [];
+      if (finishedCount > 0) parts.push(`${finishedCount} done`);
+      if (draftingCount > 0) parts.push(`${draftingCount} drafting`);
+      if (noneCount > 0) parts.push(`${noneCount} not started`);
+      statusText = parts.join(' · ');
     }
 
     let essaysList = data.essays.map(e =>
@@ -328,33 +387,12 @@ function renderCards() {
       </div>
       <ul class="scard-essays">${essaysList}</ul>
       <div class="scard-footer">
-        ${data.googleDocUrl ? `<a href="${data.googleDocUrl}" target="_blank" class="doc-link" onclick="event.stopPropagation()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Open Doc
-        </a>` : '<span class="doc-link" style="opacity:0.5">No doc needed</span>'}
         <span class="scard-status">${statusText}</span>
+        <label class="last-edit">
+          Last edit: <input type="date" value="${data.lastEdited}" data-school="${school}">
+        </label>
       </div>
     `;
-
-    // Click card to open doc and set drafting
-    card.addEventListener('click', (e) => {
-      if (e.target.classList.contains('badge') || e.target.closest('.doc-link')) return;
-      if (data.googleDocUrl) {
-        // Set any "none" essays to "drafting"
-        let changed = false;
-        for (const essay of data.essays) {
-          if (essay.status === 'none') {
-            essay.status = 'drafting';
-            changed = true;
-          }
-        }
-        if (changed) {
-          saveStatus();
-          renderCards();
-        }
-        window.open(data.googleDocUrl, '_blank');
-      }
-    });
 
     grid.appendChild(card);
   }
@@ -367,22 +405,17 @@ function renderCards() {
     });
   });
 
+  // Add change handlers for last edit dates
+  document.querySelectorAll('.last-edit input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      updateLastEdited(input.dataset.school, input.value);
+    });
+  });
+
   updateSummary();
 }
 
 // Initialize
-loadSavedStatus();
+loadSavedData();
 renderCards();
-
-// confetti
-const cv=document.getElementById('cfx'),cx=cv.getContext('2d');let P=[];
-function size(){cv.width=innerWidth;cv.height=innerHeight}addEventListener('resize',size);size();
-const COL=['#6ea8fe','#3ecf8e','#e0b341','#ef6f6f','#fff'];
-function burst(x,y,n){for(let i=0;i<n;i++){P.push({x,y,vx:(Math.random()-.5)*9,vy:Math.random()*-9-3,
-g:.28,s:Math.random()*5+3,c:COL[i%COL.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:90})}}
-function tick(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.life-->0);
-for(const p of P){p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);
-cx.fillStyle=p.c;cx.globalAlpha=Math.max(0,p.life/90);cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore()}
-if(P.length)requestAnimationFrame(tick)}
-function celebrate(x,y){burst(x,y,40);requestAnimationFrame(tick)}
 </script></body></html>
