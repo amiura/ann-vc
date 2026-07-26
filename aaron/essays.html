@@ -206,6 +206,14 @@ const essaysData = {
       { id: "gw-supp", prompt: "Supplement — prompts TBD", status: "none" }
     ]
   },
+  "Boston University": {
+    deadline: "Jan 5 (RD)",
+    section: "Boston University",
+    lastEdited: "",
+    essays: [
+      { id: "bu-supp", prompt: "Choose 1 of 2: Social issue OR Why BU (300 words)", status: "none" }
+    ]
+  },
   "Santa Clara": {
     deadline: "Jan 7 (RD)",
     section: "Santa Clara",
@@ -245,7 +253,7 @@ const essaysData = {
 
 // Load saved data from localStorage
 function loadSavedData() {
-  const saved = localStorage.getItem('aaron-essay-data-v3');
+  const saved = localStorage.getItem('aaron-essay-data-v4');
   if (saved) {
     const data = JSON.parse(saved);
     for (const school in essaysData) {
@@ -275,7 +283,7 @@ function saveData() {
       data[school].essays[essay.id] = essay.status;
     }
   }
-  localStorage.setItem('aaron-essay-data-v3', JSON.stringify(data));
+  localStorage.setItem('aaron-essay-data-v4', JSON.stringify(data));
 }
 
 // Cycle status
