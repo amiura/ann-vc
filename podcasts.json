@@ -1,0 +1,23 @@
+[
+  {
+    "show": "How I AI",
+    "title": "Build an AI code review bot in 30 minutes",
+    "url": "https://podcasters.spotify.com/pod/show/pen-name/episodes/Build-an-AI-code-review-bot-in-30-minutes-with-Vercel-Eve-e3muer1",
+    "duration": "24 min",
+    "note": "Claire Vo's AI writes most of her code now, which created a problem she didn't have before: a pull request queue no human could keep up with. The fix is the interesting part — an agent that scores every PR across six risk dimensions and escalates only what actually needs a person. When writing code gets cheap, reviewing it becomes the real work."
+  },
+  {
+    "show": "Latent Space",
+    "title": "The Inference Engineering Masterclass",
+    "url": "https://www.latent.space/p/inference-eng",
+    "duration": "101 min",
+    "note": "A hundred minutes on the economics of serving inference at scale, from a company that just became an infrastructure decacorn doing exactly that. Long, and worth it if you want to understand where the margin in AI actually sits rather than where people assume it sits."
+  },
+  {
+    "show": "AI & I",
+    "title": "Why the Next Hit AI Product Will Be Social",
+    "url": "https://share.transistor.fm/s/bec45ea1",
+    "duration": "49 min",
+    "note": "Consumer AI has been a single-player game so far: you and a chatbot, alone. Sarah Tavel argues the breakout product will have social DNA — status, network effects, people learning from watching how others use it. Worth hearing whether or not you end up agreeing."
+  }
+]

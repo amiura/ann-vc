@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcasts | Ann Miura-Ko</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+    /* Scoped to this page. The .book-* grid is built around cover images, which
+       episodes do not have, so these cards are their own thing — but they use
+       the site's variables so they read as part of the same design. */
+    .pod-list { max-width: 760px; margin: 0 auto; }
+    .pod-card {
+        background: var(--color-card-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        padding: 22px 24px;
+        margin-bottom: 16px;
+        transition: border-color .2s ease, transform .2s ease;
+    }
+    .pod-card:hover { border-color: var(--color-accent-hover); transform: translateY(-2px); }
+    .pod-show {
+        font-size: .72rem; font-weight: 600; text-transform: uppercase;
+        letter-spacing: .09em; color: var(--color-tag-text);
+    }
+    .pod-title {
+        font-size: 1.06rem; font-weight: 600; line-height: 1.35;
+        margin: 6px 0 10px; color: var(--color-text);
+    }
+    .pod-note {
+        color: var(--color-text-light); font-size: .95rem;
+        line-height: 1.65; margin: 0 0 14px;
+    }
+    .pod-foot { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .pod-dur { font-size: .82rem; color: var(--color-text-light); }
+    .pod-link {
+        font-size: .88rem; font-weight: 600; color: var(--color-tag-text);
+        text-decoration: none;
+    }
+    .pod-link:hover { text-decoration: underline; }
+    .pod-empty { text-align: center; color: var(--color-text-light); padding: 60px 0; }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="container">
+            <a href="index.html" class="nav-brand">AMK</a>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="investments.html">Investments</a>
+                <a href="books.html">Books</a>
+                <a href="writing.html">Writing</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="fade-in">Podcasts</h1>
+            <p class="page-subtitle fade-in">Episodes worth your time on how people actually use AI.</p>
+        </div>
+    </header>
+
+    <section class="page-books">
+        <div class="container">
+            <div class="pod-list" id="pod-grid"></div>
+        </div>
+    </section>
+
+<script>
+// Rendered from a sibling JSON file, same as books.html, so the list can be
+// edited without touching markup.
+function esc(s){ const d=document.createElement('div'); d.textContent = s==null?'':s; return d.innerHTML; }
+fetch('podcasts.json').then(r=>r.json()).then(rows=>{
+  const g = document.getElementById('pod-grid');
+  if(!rows.length){ g.innerHTML = '<p class="pod-empty">Nothing here yet.</p>'; return; }
+  g.innerHTML = rows.map(p=>`
+    <div class="pod-card fade-in">
+      <div class="pod-show">${esc(p.show)}</div>
+      <div class="pod-title">${esc(p.title)}</div>
+      <p class="pod-note">${esc(p.note)}</p>
+      <div class="pod-foot">
+        <a class="pod-link" href="${esc(p.url)}" target="_blank" rel="noopener">Listen &rarr;</a>
+        <span class="pod-dur">${esc(p.duration)}</span>
+      </div>
+    </div>`).join('');
+}).catch(()=>{
+  document.getElementById('pod-grid').innerHTML = '<p class="pod-empty">Nothing here yet.</p>';
+});
+</script>
+</body>
+</html>
