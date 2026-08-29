@@ -25,7 +25,7 @@ border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointe
 .doc-btn:hover{opacity:.9}
 .doc-btn svg{width:18px;height:18px}
 .egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-top:20px}
-.scard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;transition:transform .15s,box-shadow .3s,border-color .3s}
+.scard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;transition:transform .15s,box-shadow .3s,border-color .3s;cursor:pointer;text-decoration:none;display:block;color:inherit}
 .scard:hover{transform:translateY(-2px);border-color:var(--accent)}
 .scard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .scard-name{font-size:16px;font-weight:700;color:var(--ink)}
@@ -36,15 +36,14 @@ border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointe
 .eprompt{color:var(--ink);flex:1;min-width:0}
 .badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
 .badge:hover{opacity:.8}
+.brief{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;cursor:pointer;white-space:nowrap;text-transform:uppercase;letter-spacing:.5px;background:#1d2f45;color:#7fb6ef;transition:all .15s}
+.brief:hover{background:#26415f;color:#a8d0ff}
 .badge.st-none{background:#2a313d;color:var(--mut)}
 .badge.st-drafting{background:#3a3320;color:var(--target)}
 .badge.st-finished{background:#13402c;color:var(--good)}
 .badge.st-na{background:#21262f;color:var(--mut);cursor:default}
 .scard-footer{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .scard-status{font-size:11px;color:var(--mut)}
-.last-edit{font-size:11px;color:var(--mut);display:flex;align-items:center;gap:4px}
-.last-edit input{background:transparent;border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--ink);font-size:11px;width:90px}
-.last-edit input:focus{outline:none;border-color:var(--accent)}
 /* auth modal */
 .auth-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center}
 .auth-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 40px;text-align:center;max-width:340px}
@@ -78,10 +77,16 @@ border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointe
     <div class="sumbar"><span id="pct-bar" style="width:0%"></span></div>
   </div>
 
-  <a href="https://docs.google.com/document/d/171cgibwz1reqzH23iTpDQInRl2MOO6BkmXz8MKowpJ0/edit" target="_blank" class="doc-btn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-    Open Master Essay Doc
-  </a>
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:16px 0">
+    <a href="https://docs.google.com/document/d/171cgibwz1reqzH23iTpDQInRl2MOO6BkmXz8MKowpJ0/edit" target="_blank" class="doc-btn" style="margin:0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Open Master Essay Doc
+    </a>
+    <label style="font-size:13px;color:var(--mut);display:flex;align-items:center;gap:6px">
+      Aaron last worked on:
+      <input type="date" id="global-last-edit" style="background:var(--card);border:1px solid var(--line);border-radius:6px;padding:4px 8px;color:var(--ink);font-size:13px">
+    </label>
+  </div>
 
   <div class="legend">
     <div class="legend-item"><span class="badge st-none">Not started</span> No content yet</div>
@@ -118,13 +123,14 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
     }
 });
 
-// Essay data - all link to same master doc
+// Essay data - each school links to its tab in the master doc
 const MASTER_DOC = "https://docs.google.com/document/d/171cgibwz1reqzH23iTpDQInRl2MOO6BkmXz8MKowpJ0/edit";
 
 const essaysData = {
   "Common App": {
     deadline: "All schools",
     section: "Personal Statement",
+    tabId: "t.qu0ej7l9pgad",
     lastEdited: "",
     essays: [
       { id: "common-ps", prompt: "Personal statement (650 words)", status: "drafting" }
@@ -133,18 +139,20 @@ const essaysData = {
   "Yale": {
     deadline: "Nov 1 (REA)",
     section: "Yale Supplemental",
+    tabId: "t.0",
     lastEdited: "",
     essays: [
       { id: "yale-academic", prompt: "Academic interest essay (200 words)", status: "drafting" },
       { id: "yale-st1", prompt: "Short take #1 — teach/write/create", status: "drafting" },
       { id: "yale-st2", prompt: "Short take #2 — grow in college", status: "drafting" },
       { id: "yale-st3", prompt: "Short take #3 — not elsewhere", status: "drafting" },
-      { id: "yale-community", prompt: "Community essay (400 words)", status: "drafting" }
+      { id: "yale-community", prompt: "400-word essay — Option 1, canvassing", status: "drafting", brief: "https://claude.ai/code/artifact/2b196712-0920-4de7-ab82-5b9732896ca3" }
     ]
   },
   "UC System": {
     deadline: "Nov 30",
     section: "UC application",
+    tabId: "t.jp9qcot59m8d",
     lastEdited: "",
     essays: [
       { id: "uc-piq1", prompt: "PIQ #1 — Leadership", status: "none" },
@@ -156,6 +164,7 @@ const essaysData = {
   "University of Wisconsin-Madison": {
     deadline: "Nov 1 (EA)",
     section: "University of Wisconsin",
+    tabId: "t.2ey8yx8w6wxy",
     lastEdited: "",
     essays: [
       { id: "wisc-why", prompt: "Why UW / Why major (650 words)", status: "none" },
@@ -165,6 +174,7 @@ const essaysData = {
   "University of Florida": {
     deadline: "Nov 1 (EA)",
     section: "University of Florida",
+    tabId: "t.cnn6ncpd8jl0",
     lastEdited: "",
     essays: [
       { id: "uf-commitment", prompt: "Most meaningful commitment (250 words)", status: "none" }
@@ -173,6 +183,7 @@ const essaysData = {
   "BYU": {
     deadline: "Nov 1 (Priority)",
     section: "BYU",
+    tabId: "t.6qkgruem41xo",
     lastEdited: "",
     essays: [
       { id: "byu-e1", prompt: "Lose track of time (1500 chars)", status: "none" },
@@ -185,6 +196,7 @@ const essaysData = {
   "Northeastern": {
     deadline: "Jan 1 (RD)",
     section: null,
+    tabId: null,
     lastEdited: "",
     essays: [
       { id: "neu-none", prompt: "No supplement required", status: "na" }
@@ -193,6 +205,7 @@ const essaysData = {
   "Boston College": {
     deadline: "Jan 2 (ED2/RD)",
     section: "Boston College",
+    tabId: "t.qchl95jysn2z",
     lastEdited: "",
     essays: [
       { id: "bc-supp", prompt: "Choose 1 of 4 prompts (400 words)", status: "none" }
@@ -201,22 +214,25 @@ const essaysData = {
   "George Washington": {
     deadline: "Jan 5 (RD)",
     section: "George Washington",
+    tabId: "t.3pz8ni23d2zn",
     lastEdited: "",
     essays: [
       { id: "gw-supp", prompt: "Supplement — prompts TBD", status: "none" }
     ]
   },
   "Boston University": {
-    deadline: "Jan 5 (RD)",
+    deadline: "Jan 6 (RD)",
     section: "Boston University",
+    tabId: "t.9ai29s22iokm",
     lastEdited: "",
     essays: [
-      { id: "bu-supp", prompt: "Choose 1 of 2: Social issue OR Why BU (300 words)", status: "none" }
+      { id: "bu-supp", prompt: "What about being a student at BU most excites you? (300 words)", status: "none", brief: "https://claude.ai/code/artifact/1d2c8db2-f7f5-4ade-bee7-9ad8eec29abe" }
     ]
   },
   "Santa Clara": {
     deadline: "Jan 7 (RD)",
     section: "Santa Clara",
+    tabId: "t.n9u4sdipmbw7",
     lastEdited: "",
     essays: [
       { id: "scu-e1", prompt: "People/places/events (300 words)", status: "none" },
@@ -227,6 +243,7 @@ const essaysData = {
   "Villanova": {
     deadline: "Jan 15 (RD)",
     section: "Villanova",
+    tabId: "t.bmlc55qqvkvw",
     lastEdited: "",
     essays: [
       { id: "nova-supp", prompt: "Choose 1 of 5 prompts (~250 words)", status: "none" }
@@ -235,6 +252,7 @@ const essaysData = {
   "University of Washington": {
     deadline: "Nov 15 (RD)",
     section: "University of Washington",
+    tabId: "t.h4xv8dv7cjet",
     lastEdited: "",
     essays: [
       { id: "uw-essays", prompt: "Essays — own application, TBD", status: "none" }
@@ -243,6 +261,7 @@ const essaysData = {
   "Lehigh": {
     deadline: "Jan 1 (RD)",
     section: "Lehigh",
+    tabId: "t.bl8m4yv3pk0s",
     lastEdited: "",
     essays: [
       { id: "lehigh-why", prompt: "Why Lehigh (~200 words)", status: "none" },
@@ -302,12 +321,6 @@ function cycleStatus(essayId) {
   }
 }
 
-// Update last edited
-function updateLastEdited(school, value) {
-  essaysData[school].lastEdited = value;
-  saveData();
-}
-
 // Get badge HTML
 function getBadgeHtml(status, essayId) {
   const labels = { none: 'Not started', drafting: 'Drafting', finished: 'Done', na: 'N/A' };
@@ -348,7 +361,7 @@ function renderCards() {
   const schoolOrder = Object.keys(essaysData).sort((a, b) => {
     const deadlines = {
       'Nov 1': 1, 'Nov 15': 2, 'Nov 30': 3,
-      'Jan 1': 4, 'Jan 2': 5, 'Jan 5': 6, 'Jan 7': 7, 'Jan 15': 8,
+      'Jan 1': 4, 'Jan 2': 5, 'Jan 5': 6, 'Jan 6': 7, 'Jan 7': 8, 'Jan 15': 9,
       'All schools': 0
     };
     const getOrder = (s) => {
@@ -361,10 +374,24 @@ function renderCards() {
     return getOrder(a) - getOrder(b);
   });
 
+  document.addEventListener('click', (ev) => {
+    const chip = ev.target.closest('.brief');
+    if (!chip) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    window.open(chip.dataset.href, '_blank', 'noopener');
+  });
+
   for (const school of schoolOrder) {
     const data = essaysData[school];
-    const card = document.createElement('div');
+    const card = document.createElement('a');
     card.className = 'scard';
+    if (data.tabId) {
+      card.href = `${MASTER_DOC}?tab=${data.tabId}`;
+      card.target = '_blank';
+    } else {
+      card.style.cursor = 'default';
+    }
 
     const schoolEssays = data.essays.filter(e => e.status !== 'na');
     const finishedCount = schoolEssays.filter(e => e.status === 'finished').length;
@@ -385,7 +412,7 @@ function renderCards() {
     }
 
     let essaysList = data.essays.map(e =>
-      `<li><span class="eprompt">${e.prompt}</span>${getBadgeHtml(e.status, e.id)}</li>`
+      `<li><span class="eprompt">${e.prompt}</span>${e.brief ? `<span class="brief" data-href="${e.brief}" title="Open the essay brief">Brief \u2197</span>` : ''}${getBadgeHtml(e.status, e.id)}</li>`
     ).join('');
 
     card.innerHTML = `
@@ -396,27 +423,18 @@ function renderCards() {
       <ul class="scard-essays">${essaysList}</ul>
       <div class="scard-footer">
         <span class="scard-status">${statusText}</span>
-        <label class="last-edit">
-          Last edit: <input type="date" value="${data.lastEdited}" data-school="${school}">
-        </label>
       </div>
     `;
 
     grid.appendChild(card);
   }
 
-  // Add click handlers for badges
+  // Add click handlers for badges (prevent navigation)
   document.querySelectorAll('.badge:not(.st-na)').forEach(badge => {
     badge.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
       cycleStatus(badge.dataset.essay);
-    });
-  });
-
-  // Add change handlers for last edit dates
-  document.querySelectorAll('.last-edit input').forEach(input => {
-    input.addEventListener('change', (e) => {
-      updateLastEdited(input.dataset.school, input.value);
     });
   });
 
@@ -426,4 +444,12 @@ function renderCards() {
 // Initialize
 loadSavedData();
 renderCards();
+
+// Global last-edit date
+const globalEditInput = document.getElementById('global-last-edit');
+const savedGlobalDate = localStorage.getItem('aaron-essay-global-date');
+if (savedGlobalDate) globalEditInput.value = savedGlobalDate;
+globalEditInput.addEventListener('change', () => {
+  localStorage.setItem('aaron-essay-global-date', globalEditInput.value);
+});
 </script></body></html>
