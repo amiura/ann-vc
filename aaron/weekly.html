@@ -96,7 +96,7 @@ table.grid{width:100%;border-collapse:collapse;font-size:13px;background:var(--c
 <nav><span class="brand">Aaron · College</span><a href="index.html" class="">Dashboard</a><a href="weekly.html" class="on">Weekly</a><a href="essays.html" class="">Essays</a></nav>
 <div class="wrap">
   <h1>Weekly synopsis</h1>
-  <p class="sub">Track your tasks and stay on top of deadlines. Check off items as you complete them.</p>
+  <p class="sub">Week of Oct 12 — <strong>finish Yale</strong>. If there is time left: Florida, Wisconsin, BYU. Check items off as you go.</p>
 
   <!-- Behind / Overdue section -->
   <div class="block alert" id="behind-block" style="display:none">
@@ -129,13 +129,15 @@ table.grid{width:100%;border-collapse:collapse;font-size:13px;background:var(--c
   <!-- Next up dates -->
   <h2>Key dates</h2>
   <table class="grid dates"><tbody>
-    <tr><td class="dt">Aug 1, 2026</td><td>Common App opens — collect supplement prompts</td></tr>
-    <tr><td class="dt">August 2026</td><td>College Launch Part 2 — lock final list</td></tr>
-    <tr><td class="dt">Sep 2026</td><td>ACT sitting #1</td></tr>
-    <tr><td class="dt">Oct 1 – Nov 30, 2026</td><td>UC application filing window</td></tr>
     <tr><td class="dt">Oct 15, 2026</td><td><strong>UF binding Early Decision</strong> (if used)</td></tr>
-    <tr><td class="dt">Oct 2026</td><td>ACT sitting #2</td></tr>
-    <tr><td class="dt">Nov 1, 2026</td><td><strong>Yale REA · Wisconsin EA · UF EA · Santa Clara EA · Northeastern EA · BYU</strong></td></tr>
+    <tr><td class="dt">Oct 17, 2026</td><td>ACT sitting #2</td></tr>
+    <tr><td class="dt">Nov 1, 2026</td><td><strong>Yale REA · Wisconsin EA · UF EA</strong></td></tr>
+    <tr><td class="dt">Nov 2, 2026</td><td><strong>BYU priority deadline</strong> (final deadline Dec 15)</td></tr>
+    <tr><td class="dt">Nov 8, 2026</td><td>UF EA supporting materials due</td></tr>
+    <tr><td class="dt">Nov 9, 2026</td><td>Wisconsin EA supporting materials due</td></tr>
+    <tr><td class="dt">Nov 15, 2026</td><td>University of Washington</td></tr>
+    <tr><td class="dt">Nov 20, 2026</td><td>Self-imposed: all apps submitted</td></tr>
+    <tr><td class="dt">Nov 30, 2026</td><td>UC application deadline</td></tr>
   </tbody></table>
 </div>
 </div>
@@ -203,14 +205,20 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
 
 // Initial tasks data
 const defaultTasks = [
-  { id: 1, text: "Decide BC: Carroll (business) vs Morrissey (IR/politics)", due: "2026-07-28", done: false },
-  { id: 2, text: "Confirm with BC whether RD/ED2 applicants are still considered for Gabelli Presidential Scholars", due: "2026-07-28", done: false },
-  { id: 3, text: "Decide UW–Madison: Business direct-admit vs L&S Honors", due: "2026-07-30", done: false },
-  { id: 4, text: "Get Aaron on Santa Clara's mailing list + to an event — DI matters", due: "2026-08-01", done: false },
-  { id: 5, text: "Start BYU ecclesiastical endorsement (bishop + stake president)", due: "2026-08-15", done: false },
-  { id: 6, text: "Draft Yale short take #1 (teach/write/create) — still blank", due: "2026-08-01", done: false },
-  { id: 7, text: "Get AP Macro score → share with Katy Murphy when released", due: "2026-07-10", done: false },
-  { id: 8, text: "Fill the Honors section in activities-list.md", due: "2026-08-01", done: false }
+  { id: 1, text: "Yale — pick the final three short takes: one per prompt, delete the alternates, each 200 characters or less", due: "2026-10-18", done: false },
+  { id: 2, text: "Yale — trim the 400-word canvassing essay to 400 (the sectional-edits version is about 402) and read it aloud once", due: "2026-10-18", done: false },
+  { id: 3, text: "Yale — lock the 200-word academic essay (the 199-word farmers-market version) and confirm the three academic areas", due: "2026-10-18", done: false },
+  { id: 4, text: "Yale — cut the Common App personal statement to 650 (the 650 tab is about 655); Yale can't go in without it", due: "2026-10-18", done: false },
+  { id: 5, text: "Yale — send the finished supplement to Chris for a last edit, then mark it done", due: "2026-10-18", done: false },
+  { id: 6, text: "Stretch · Florida — final read of the 250-word commitment essay (about 247 now) and decide yes/no on the optional Honors essay", due: "2026-10-18", done: false },
+  { id: 7, text: "Stretch · Wisconsin — write a first draft of \"Why UW / why major\" (aim for 300–500 words); the doc has notes only", due: "2026-10-18", done: false },
+  { id: 8, text: "Stretch · BYU — ask the bishop and stake president for the ecclesiastical endorsement; it runs on their calendar, not yours", due: "2026-10-18", done: false },
+  { id: 9, text: "Stretch · BYU — draft essays 1 and 2 yourself (topics already picked: Democracy in action, Farmlink); no AI on these", due: "2026-10-18", done: false },
+  { id: 10, text: "Yale — submit the REA application (deadline Nov 1)", due: "2026-10-28", done: false },
+  { id: 11, text: "Florida — submit Early Action (deadline Nov 1; supporting materials by Nov 8)", due: "2026-10-30", done: false },
+  { id: 12, text: "Wisconsin — submit Early Action (deadline Nov 1; supporting materials by Nov 9)", due: "2026-10-30", done: false },
+  { id: 13, text: "BYU — draft essays 3, 4 and 5 yourself; no AI", due: "2026-10-25", done: false },
+  { id: 14, text: "BYU — submit by the priority deadline (Nov 2; aim for Nov 1)", due: "2026-11-01", done: false }
 ];
 
 let tasks = [];
@@ -219,7 +227,7 @@ let delayingTaskId = null;
 
 // Load tasks from localStorage
 function loadTasks() {
-  const saved = localStorage.getItem('aaron-weekly-tasks');
+  const saved = localStorage.getItem('aaron-weekly-tasks-2026-10-12');
   if (saved) {
     tasks = JSON.parse(saved);
     nextId = Math.max(...tasks.map(t => t.id), 99) + 1;
@@ -231,7 +239,7 @@ function loadTasks() {
 
 // Save tasks to localStorage
 function saveTasks() {
-  localStorage.setItem('aaron-weekly-tasks', JSON.stringify(tasks));
+  localStorage.setItem('aaron-weekly-tasks-2026-10-12', JSON.stringify(tasks));
 }
 
 // Get today's date string
